@@ -1,0 +1,8 @@
+---
+
+- hosts: all
+  vars_files:
+  - ../vars/user.yml
+  roles:
+  - {role: base, tags: ['base']}
+  - {role: user, tags: ['user']}

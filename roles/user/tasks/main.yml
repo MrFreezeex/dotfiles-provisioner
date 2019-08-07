@@ -1,0 +1,14 @@
+---
+
+- name: add the user
+  user: 
+    name: "{{user.name}}"
+    comment: "{{user.comment}}"
+    groups: "{{user.name}},network,docker,libvirt,video,kvm,wheel"
+    append: yes
+
+- lineinfile:
+    path: /etc/sudoers.d/01-sudoers-wheel
+    line: '%wheel ALL=(ALL) ALL'
+    create: yes
+    validate: 'visudo -cf %s'

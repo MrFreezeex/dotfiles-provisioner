@@ -1,0 +1,13 @@
+---
+
+- name: service libvirtd
+  service:
+    name: libvirtd
+    enabled: yes
+    state: started
+
+- name: service dockerd
+  service:
+    name: dockerd
+    enabled: yes
+    state: started

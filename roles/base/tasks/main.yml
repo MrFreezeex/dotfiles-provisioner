@@ -1,0 +1,76 @@
+---
+
+- name: refresh pacman db
+  pacman:
+    update_cache: yes
+
+- name: install bunch of packages
+  pacman:
+    state: present
+    name:
+    - git
+    - virt-manager
+    - qemu
+    - vde2
+    - ebtables
+    - dnsmasq
+    - bridge-utils
+    - openbsd-netcat
+    - docker
+  notify:
+  - service libvirtd
+  - service dockerd
+
+- name: check if pikaur is installed
+  shell: pacman -Q pikaur
+  register: pikaur_installed
+  changed_when: False
+
+- name: clone pikaur
+  git:
+    repo: https://aur.archlinux.org/pikaur.git
+    dest: /tmp/pikaur-clone
+  become: yes
+  become_user: aur_builder
+  when: pikaur_installed.rc != 0
+
+- user:
+    name: aur_builder
+    group: wheel
+  when: pikaur_installed.rc != 0
+
+- lineinfile:
+    path: /etc/sudoers.d/11-install-aur_builder
+    line: 'aur_builder ALL=(ALL) NOPASSWD: /usr/bin/pacman'
+    create: yes
+    validate: 'visudo -cf %s'
+  when: pikaur_installed.rc != 0
+
+- name: install pikaur
+  shell: makepkg -fsri --noconfirm
+  args:
+    chdir: /tmp/pikaur-clone
+  become: yes
+  become_user: aur_builder
+  when: pikaur_installed.rc != 0
+
+- name: remove pikaur installation files
+  file:
+    path: /tmp/pikaur-clone
+    state: absent
+
+- name: remove aur_builder sudoer file
+  file:
+    path: /etc/sudoers.d/11-install-aur_builder
+    state: absent
+
+- name: remove aur_builder user
+  user:
+    name: aur_builder
+    state: absent
+
+- name: upgrade system
+  aur:
+    upgrade: yes
+    use: pikaur
+
