@@ -1,8 +1,12 @@
 ---
 
 - hosts: all
-  vars_files:
-  - ../vars/user.yml
   roles:
   - {role: base, tags: ['base']}
+
+- hosts: all
+  vars_files:
+  - ../vars/user.yml
+  - ../vaulted_vars/password.yml
+  roles:
   - {role: user, tags: ['user']}

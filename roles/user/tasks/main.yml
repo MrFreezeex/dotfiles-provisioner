@@ -3,6 +3,7 @@
 - name: add the user
   user: 
     name: "{{user.name}}"
+    password: "{{password}}"
     comment: "{{user.comment}}"
     groups: "{{user.name}},network,docker,libvirt,video,kvm,wheel"
     append: yes
