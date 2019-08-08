@@ -10,3 +10,9 @@
   - ../vaulted_vars/password.yml
   roles:
   - {role: user, tags: ['user']}
+
+- hosts: all
+  vars_files:
+  - ../vars/user.yml
+  roles:
+  - {role: i3, tags: ['i3']}

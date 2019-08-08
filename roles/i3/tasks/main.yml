@@ -1,0 +1,31 @@
+- name: install i3 packages
+  pacman:
+    state: present
+    name:
+    - i3
+    - nitrogen
+    - rofi
+    - compton
+    - python-pip
+    - ttf-font-awesome
+    - adobe-source-code-pro-fonts
+    - binutils
+    - gcc
+    - make
+    - pkg-config
+    - fakeroot
+
+- name: create i3 conf directory
+  file:
+    path: ~/.config/i3
+    mode: 0700
+    state: directory
+  become: yes
+  become_user: "{{user.name}}"
+
+- name: install i3 conf
+  copy:
+    src: config
+    dest: ~/.config/i3/config
+  become: yes
+  become_user: "{{user.name}}"
