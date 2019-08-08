@@ -1,0 +1,15 @@
+---
+
+- name: install sddm
+  pacman:
+    name: sddm
+
+- name: install sddm file
+  template:
+    src: sddm.conf
+    dest: /etc/sddm.conf
+
+- name: install sddm theme
+  git:
+    repo: https://github.com/MarianArlt/sddm-chili.git
+    dest: /usr/share/sddm/themes/chili

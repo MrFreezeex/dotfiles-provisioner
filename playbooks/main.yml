@@ -21,4 +21,5 @@
   - {role: i3, tags: ['i3']}
   - {role: polybar, tags: ['polybar']}
   - {role: xinit, tags: ['xinit']}
+  - {role: sddm, tags: ['sddm']}
   - {role: redshift, tags: ['redshift']}
