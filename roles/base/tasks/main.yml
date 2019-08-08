@@ -17,6 +17,8 @@
     - bridge-utils
     - openbsd-netcat
     - docker
+    - pavucontrol
+    - pulseaudio
   notify:
   - service libvirtd
   - service dockerd
