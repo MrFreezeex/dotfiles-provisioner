@@ -16,3 +16,4 @@
   - ../vars/user.yml
   roles:
   - {role: i3, tags: ['i3']}
+  - {role: polybar, tags: ['polybar']}

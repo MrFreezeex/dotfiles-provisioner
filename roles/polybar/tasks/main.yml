@@ -1,0 +1,28 @@
+- name: install polybar
+  aur:
+    name:
+    - polybar-git
+    - ttf-nerd-fonts-symbols
+    use: pikaur
+
+- name: create polybar conf directory
+  file:
+    path: ~/.config/polybar
+    mode: 0700
+    state: directory
+  become: yes
+  become_user: "{{user.name}}"
+
+- name: install polybar conf
+  copy:
+    src: config
+    dest: ~/.config/polybar/config
+  become: yes
+  become_user: "{{user.name}}"
+
+- name: install polybar script
+  copy:
+    src: reload.sh
+    dest: ~/.config/polybar/reload.sh
+  become: yes
+  become_user: "{{user.name}}"
