@@ -1,0 +1,28 @@
+- name: install gtk packages
+  pacman:
+    state: present
+    name:
+    - gtk2
+    - gtk3
+
+- name: install gtk2 conf
+  copy:
+    src: gtkrc-2.0
+    dest: ~/.gtkrc-2.0
+  become: yes
+  become_user: "{{user.name}}"
+
+- name: create i3 conf directory
+  file:
+    path: ~/.config/gtk-3.0
+    mode: 0700
+    state: directory
+  become: yes
+  become_user: "{{user.name}}"
+
+- name: install gtk3 conf
+  copy:
+    src: settings.ini
+    dest: ~/.config/gtk-3.0/settings.ini
+  become: yes
+  become_user: "{{user.name}}"
