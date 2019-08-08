@@ -9,8 +9,6 @@
     - rofi
     - compton
     - python-pip
-    - ttf-font-awesome
-    - adobe-source-code-pro-fonts
     - binutils
     - gcc
     - make

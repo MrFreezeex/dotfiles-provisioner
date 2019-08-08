@@ -3,7 +3,7 @@
 - name: make sure xorg is installed
   pacman:
     name:
-    - xorg-server
+    - xorg
 
 - name: install xorg conf
   copy:
@@ -11,5 +11,4 @@
     dest: "/etc/X11/xorg.conf.d/{{item}}"
   with_items:
   - 00-keyboard.conf
-  - 05-font.conf
   - 50-synaptics.conf

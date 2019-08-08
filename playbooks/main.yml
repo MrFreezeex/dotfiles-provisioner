@@ -16,6 +16,7 @@
   - ../vars/user.yml
   roles:
   - {role: xorg, tags: ['xorg']}
+  - {role: fonts, tags: ['fonts']}
   - {role: gtk, tags: ['gtk']}
   - {role: i3, tags: ['i3']}
   - {role: polybar, tags: ['polybar']}

@@ -1,0 +1,24 @@
+---
+
+- name: install fonts
+  aur:
+    name:
+    - ttf-font-awesome
+    - adobe-source-code-pro-fonts
+    - cantarell-fonts
+    - nerd-fonts-complete
+    - nerd-fonts
+    - termsyn-fonts
+    - ttf-nerd-fonts-symbols
+    use: pikaur
+
+- name: install font manager
+  aur:
+    name:
+    - font-manager
+    use: pikaur
+
+- name: install xorg conf
+  copy:
+    src: 05-font.conf
+    dest: /etc/X11/xorg.conf.d/05-font.conf
