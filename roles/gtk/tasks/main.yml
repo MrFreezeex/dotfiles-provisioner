@@ -14,7 +14,7 @@
   become: yes
   become_user: "{{user.name}}"
 
-- name: create i3 conf directory
+- name: create gtk conf directory
   file:
     path: ~/.config/gtk-3.0
     mode: 0700

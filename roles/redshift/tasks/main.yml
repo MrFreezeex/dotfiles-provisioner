@@ -1,0 +1,21 @@
+---
+
+- name: install redshift
+  pacman:
+    name:
+    - redshift
+
+- name: create redshift conf directory
+  file:
+    path: ~/.config/redshift
+    mode: 0700
+    state: directory
+  become: yes
+  become_user: "{{user.name}}"
+
+- name: install redshift config
+  copy:
+    src: redshift.conf
+    dest: ~/.config/redshift/redshift.conf
+  become: yes
+  become_user: "{{user.name}}"
