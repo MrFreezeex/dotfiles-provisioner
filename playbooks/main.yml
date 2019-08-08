@@ -18,3 +18,4 @@
   - {role: i3, tags: ['i3']}
   - {role: polybar, tags: ['polybar']}
   - {role: gtk, tags: ['gtk']}
+  - {role: xorg, tags: ['xorg']}
