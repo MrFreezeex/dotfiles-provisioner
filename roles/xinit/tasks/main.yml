@@ -1,0 +1,17 @@
+---
+
+- name: install xinit
+  pacman:
+    name: xorg-xinit
+
+- name: install xinit-xsession
+  aur:
+    name: xinit-xsession
+    use: pikaur
+
+- name: install xinitrc file
+  copy:
+    src: xinitrc
+    dest: ~/.xinitrc
+  become: yes
+  become_user: "{{user.name}}"

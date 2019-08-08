@@ -19,4 +19,5 @@
   - {role: gtk, tags: ['gtk']}
   - {role: i3, tags: ['i3']}
   - {role: polybar, tags: ['polybar']}
+  - {role: xinit, tags: ['xinit']}
   - {role: redshift, tags: ['redshift']}
