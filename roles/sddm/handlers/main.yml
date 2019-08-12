@@ -1,0 +1,8 @@
+---
+
+- name: service sddm
+  service:
+    name: sddm
+    enabled: yes
+    state: started
+

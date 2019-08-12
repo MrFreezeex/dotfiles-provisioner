@@ -3,6 +3,7 @@
 - name: install sddm
   pacman:
     name: sddm
+  notify: service sddm
 
 - name: install sddm file
   template:
