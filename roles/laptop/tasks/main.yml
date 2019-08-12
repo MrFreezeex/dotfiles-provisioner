@@ -12,6 +12,8 @@
   - disable-nvidia.conf
   - i915.conf
   - powersave.conf
+  - kvm.conf
+  - scsi_mod.conf
   
 - name: install binaries
   copy:
