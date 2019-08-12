@@ -24,6 +24,7 @@
   copy:
     src: reload.sh
     dest: ~/.config/polybar/reload.sh
+    mode: 0755
   become: yes
   become_user: "{{user.name}}"
 
@@ -31,6 +32,7 @@
   copy:
     src: "{{item}}"
     dest: "/usr/local/bin/{{item}}"
+    mode: 0755
   with_items:
   - notify-volume
   - notify-light
