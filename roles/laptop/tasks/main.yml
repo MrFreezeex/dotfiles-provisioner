@@ -1,0 +1,79 @@
+---
+
+- name: install modprobe conf
+  copy:
+    src: "{{item}}"
+    dest: "/etc/modprobe.d/{{item}}"
+  with_items:
+  - blacklist.conf
+  - dell-smm-hwmon.conf
+  - disable-cam.conf
+  - disable-ipmi.conf
+  - disable-nvidia.conf
+  - i915.conf
+  - powersave.conf
+  
+- name: install binaries
+  copy:
+    src: "{{item}}"
+    dest: "/usr/local/bin/{{item}}"
+    mode: 0755
+  with_items:
+  - disablecam
+  - enablecam
+  - unbindgpu
+  - bindgpu
+  - disablegpu
+  - enablegpu
+
+- name: install systemd services
+  copy:
+    src: "{{item}}"
+    dest: "/etc/systemd/system/{{item}}"
+  with_items:
+  - disable-nvidia-on-shutdown.service
+  - disable-cam-on-shutdown.service
+  notify: disable device services
+
+- name: install modules load dell-hwmon
+  copy:
+    src: dell-hwmon.conf
+    dest: /etc/modules-load.d/dell-hwmon.conf
+
+- name: install xorg conf
+  copy:
+    src: "{{item}}"
+    dest: "/etc/X11/xorg.conf.d/{{item}}"
+  with_items:
+  - 01-noautogpu.conf
+  - 20-intel.conf
+  - 50-synaptics.conf
+
+- name: install tmpfiles.d
+  copy:
+    src: "{{item}}"
+    dest: "/etc/tmpfiles.d/{{item}}"
+  with_items:
+  - nvidia_pm.conf
+  - pcie_powersave.conf
+
+- name: install lenovo-throttling-fix-git
+  aur:
+    name: lenovo-throttling-fix-git
+    use: pikaur
+  notify: service lenovo_fix
+
+- name: install lenovo_fix.conf
+  copy:
+    src: lenovo_fix.conf
+    dest: /etc/lenovo_fix.conf
+
+- name: install tlp
+  pacman:
+    name: tlp
+  notify: service tlp
+
+- name: install tlp conf
+  copy:
+    src: tlp
+    dest: /etc/default/tlp

@@ -23,3 +23,4 @@
   - {role: xinit, tags: ['xinit']}
   - {role: sddm, tags: ['sddm']}
   - {role: redshift, tags: ['redshift']}
+  - {role: laptop, tags: ['laptop', 'xps']}

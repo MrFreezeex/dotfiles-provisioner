@@ -5,10 +5,7 @@
     name:
     - xorg
 
-- name: install xorg conf
+- name: install xorg keyboard conf
   copy:
-    src: "{{item}}"
-    dest: "/etc/X11/xorg.conf.d/{{item}}"
-  with_items:
-  - 00-keyboard.conf
-  - 50-synaptics.conf
+    src: 00-keyboard.conf
+    dest: /etc/X11/xorg.conf.d/00-keyboard.conf

@@ -1,0 +1,11 @@
+[Unit]
+Description=Disables cam on OS shutdown
+
+[Service]
+Type=oneshot
+RemainAfterExit=true
+ExecStart=/bin/true
+ExecStop=/bin/bash -c "mv /etc/modprobe.d/disable-cam.conf.disable /etc/modprobe.d/disable-cam.conf || true"
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,22 @@
+---
+
+- name: disable device services
+  service:
+    name: "{{item}}"
+    enabled: yes
+    state: started
+  with_items:
+  - disable-nvidia-on-shutdown.service
+  - disable-cam-on-shutdown.service
+
+- name: service lenovo_fix
+  service:
+    name: lenovo_fix
+    enabled: yes
+    state: started
+
+- name: service tlp
+  service:
+    name: tlp
+    enabled: yes
+    state: started

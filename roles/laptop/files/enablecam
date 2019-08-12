@@ -1,0 +1,11 @@
+#!/bin/sh
+
+if [ -f "/etc/modprobe.d/disable-cam.conf.disable" ]; then
+	echo "cam already enabled"
+	exit 1
+fi
+
+# allow to load nvidia module
+mv /etc/modprobe.d/disable-cam.conf /etc/modprobe.d/disable-cam.conf.disable
+
+modprobe uvcvideo
