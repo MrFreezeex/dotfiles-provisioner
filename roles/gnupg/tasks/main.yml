@@ -1,0 +1,28 @@
+---
+
+- name: install needed packages for yubikey & gnupg
+  pacman:
+    name:
+    - gnupg
+    - pcsclite
+    - ccid
+    - hopenpgp-tools
+    - yubikey-personalization
+
+- name: create gnupg directory
+  file:
+    path: ~/.gnupg
+    mode: 0700
+    state: directory
+  become: yes
+  become_user: "{{user.name}}"
+
+- name: install gnupg and gpg-agent conf
+  copy:
+    src: "{{item}}"
+    dest: "~/.gnupg/{{item}}"
+  become: yes
+  become_user: "{{user.name}}"
+  with_items:
+  - gpg.conf 
+  - gpg-agent.conf
