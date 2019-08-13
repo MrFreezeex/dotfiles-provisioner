@@ -1,0 +1,29 @@
+---
+
+- name: install dialog
+  pacman:
+    name: dialog
+
+- name: add grub theme in config
+  lineinfile:
+    path: /etc/default/grub
+    regexp: '^GRUB_THEME='
+    line: 'GRUB_THEME="/boot/grub/themes/Tela/theme.txt"'
+  register: grubtheme
+
+- name: clone Tela theme
+  git:
+    repo: https://github.com/vinceliuice/grub2-themes.git
+    dest: /tmp/grub-theme-tela
+  when: grubtheme.changed
+
+- name: install Tela theme
+  shell: ./install.sh --tela
+  args:
+    chdir: /tmp/grub-theme-tela
+  when: grubtheme.changed
+
+- name: remove Tela theme tmp dir
+  file:
+    path: /tmp/grub-theme-tela
+    state: absent
