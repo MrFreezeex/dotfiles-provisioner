@@ -1,0 +1,45 @@
+---
+
+- name: install oh-my-zsh
+  aur:
+    name: oh-my-zsh-git
+    use: pikaur
+
+- name: install urxvt
+  pacman:
+    name: rxvt-unicode
+
+- name: install zsh plugins
+  aur:
+    name: "{{item}}"
+    use: pikaur
+  with_items:
+  - zsh-syntax-highlighting
+  - zsh-autosuggestions
+
+- name: create symlink for zsh plugins
+  file:
+    src: "/usr/share/zsh/plugins/{{item}}"
+    path: "/usr/share/oh-my-zsh/plugins/{{item}}"
+    state: link
+  with_items:
+  - zsh-autosuggestions
+  - zsh-syntax-highlighting
+
+- name: install zsh dotfiles
+  copy:
+    src: "{{item}}"
+    dest: "~/.{{item}}"
+  with_items:
+  - zshrc
+  - zprofile
+  - aliases
+  become: yes
+  become_user: "{{user.name}}"
+
+- name: install Xresources
+  copy:
+    src: Xresources
+    dest: ~/.Xresources
+  become: yes
+  become_user: "{{user.name}}"

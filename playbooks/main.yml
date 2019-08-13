@@ -18,9 +18,10 @@
   - {role: xorg, tags: ['xorg']}
   - {role: fonts, tags: ['fonts']}
   - {role: gtk, tags: ['gtk']}
+  - {role: terminal, tags: ['terminal']}
   - {role: i3, tags: ['i3']}
   - {role: polybar, tags: ['polybar']}
   - {role: xinit, tags: ['xinit']}
-  - {role: sddm, tags: ['sddm']}
   - {role: redshift, tags: ['redshift']}
   - {role: laptop, tags: ['laptop', 'xps']}
+  - {role: sddm, tags: ['sddm']}

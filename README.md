@@ -7,6 +7,7 @@ It's adapted to my current laptop which is a Dell XPS 7590 with a GPU.
 
 # TODO
 
-* zsh
+* git config
+* dnsmasq
 * grub theme
-* secureboot
+* secureboot scripts
