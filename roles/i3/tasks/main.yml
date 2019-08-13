@@ -29,3 +29,22 @@
     dest: ~/.config/i3/config
   become: yes
   become_user: "{{user.name}}"
+
+- name: create nitrogen conf directory
+  file:
+    path: ~/.config/nitrogen
+    mode: 0700
+    state: directory
+  become: yes
+  become_user: "{{user.name}}"
+
+- name: copy nitrogen files
+  copy:
+    src: "{{item}}"
+    dest: "~/.config/nitrogen/{{item}}"
+  with_items:
+  - bg-saved.cfg
+  - wallpaper.jpg
+  become: yes
+  become_user: "{{user.name}}"
+
