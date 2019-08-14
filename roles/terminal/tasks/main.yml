@@ -5,9 +5,10 @@
     name: oh-my-zsh-git
     use: pikaur
 
-- name: install urxvt
-  pacman:
-    name: rxvt-unicode
+- name: install urxvt truecolor
+  aur:
+    name: rxvt-unicode-truecolor
+    use: pikaur
 
 - name: install zsh plugins
   aur:
@@ -43,3 +44,29 @@
     dest: ~/.Xresources
   become: yes
   become_user: "{{user.name}}"
+
+- name: install vim
+  pacman:
+    name: vim
+
+- name: install ctags
+  pacman:
+    name: ctags
+
+- name: install vimrc
+  copy:
+    src: vimrc
+    dest: ~/.vimrc
+  become: yes
+  become_user: "{{user.name}}"
+  register: vimrc
+
+- name: install vundle
+  git:
+    repo: https://github.com/VundleVim/Vundle.vim.git
+    dest: ~/.vim/bundle/Vundle.vim
+  register: vundle
+
+- name: install vundle plugins
+  shell: vim +PluginInstall +qall
+  when: vimrc.changed or vundle.changed

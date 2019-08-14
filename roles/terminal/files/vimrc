@@ -1,0 +1,142 @@
+" ~/.vimrc
+
+" set the runtime path to include Vundle and initialize
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+
+Plugin 'VundleVim/Vundle.vim'
+Plugin 'tpope/vim-sensible'
+
+Plugin 'tpope/vim-surround'
+Plugin 'tpope/vim-repeat'
+Plugin 'scrooloose/nerdcommenter'
+Plugin 'romainl/vim-qf'
+
+Plugin 'ctrlpvim/ctrlp.vim'
+
+Plugin 'vim-airline/vim-airline'
+Plugin 'vim-airline/vim-airline-themes'
+
+Plugin 'ludovicchabant/vim-gutentags'
+
+Plugin 'tpope/vim-vinegar'
+
+Plugin 'tpope/vim-fugitive'
+
+Plugin 'pearofducks/ansible-vim'
+
+Plugin 'jacoborus/tender.vim'
+
+call vundle#end()            " required
+filetype plugin indent on    " required
+
+runtime! plugin/sensible.vim
+
+set encoding=utf-8 fileencodings=
+syntax on
+
+set autoread
+set autowrite
+set nobackup
+set noswapfile
+" set term=xterm-256color
+
+set scrolloff=5
+
+set number
+set cc=80
+
+set wildmenu
+set wildmode=longest:full,list:full
+
+" color oversized lines
+set colorcolumn=+1
+
+autocmd Filetype make setlocal noexpandtab
+
+set list listchars=tab:»·,trail:·
+
+set mouse=a
+set showmatch
+
+set wrap textwidth=79
+
+set completeopt=longest,menuone
+
+set cursorline
+
+set ignorecase
+set smartcase
+set incsearch
+
+set tabstop=8
+set shiftwidth=4
+set softtabstop=-1
+
+set expandtab smarttab
+set autoindent smartindent
+
+" set mapleader (mainly for nerdcommenter)
+let mapleader = ","
+
+noremap <leader>pp :setlocal paste!<cr>
+
+noremap j gj
+noremap k gk
+
+cnoreabbrev w!! w !sudo tee % >/dev/null
+
+set viminfo='20,\"50,<100,n~/.vimtmp/viminfo
+silent !mkdir -p ~/.vimtmp/
+
+" save undo
+set undofile
+set undodir=~/.vimtmp/undo
+silent !mkdir -p ~/.vimtmp/undo
+
+" per .git vim configs
+" just `git config vim.settings "expandtab sw=4 sts=4"` in a git repository
+" change syntax settings for this repository
+let git_settings = system("git config --get vim.settings")
+if strlen(git_settings)
+	exe "set" git_settings
+endif
+
+if !exists('g:airline_symbols')
+    let g:airline_symbols = {}
+endif
+
+set termguicolors
+colorscheme tender
+let g:airline_theme = 'tender'
+
+
+" unicode symbols
+let g:airline_left_sep = '»'
+let g:airline_left_sep = '▶'
+let g:airline_right_sep = '«'
+let g:airline_right_sep = '◀'
+" let g:airline_symbols.crypt = '🔒'
+let g:airline_symbols.linenr = '☰'
+let g:airline_symbols.linenr = '␊'
+let g:airline_symbols.linenr = '␤'
+let g:airline_symbols.linenr = '¶'
+" let g:airline_symbols.maxlinenr = ''
+" let g:airline_symbols.maxlinenr = '㏑'
+" let g:airline_symbols.branch = '⎇'
+let g:airline_symbols.paste = 'ρ'
+let g:airline_symbols.paste = 'Þ'
+let g:airline_symbols.paste = '∥'
+let g:airline_symbols.spell = 'Ꞩ'
+let g:airline_symbols.notexists = 'Ɇ'
+let g:airline_symbols.whitespace = 'Ξ'
+
+" powerline symbols
+let g:airline_left_sep = ''
+let g:airline_left_alt_sep = ''
+let g:airline_right_sep = ''
+let g:airline_right_alt_sep = ''
+let g:airline_symbols.branch = ''
+let g:airline_symbols.readonly = ''
+let g:airline_symbols.linenr = '☰'
+let g:airline_symbols.maxlinenr = ''
