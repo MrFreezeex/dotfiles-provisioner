@@ -1,5 +1,10 @@
 ---
 
+- name: check if grub is installed
+  shell: pacman -Q grub
+  register: grub_installed
+  changed_when: False
+
 - name: install dialog
   pacman:
     name: dialog
@@ -10,6 +15,7 @@
     regexp: '^GRUB_THEME='
     line: 'GRUB_THEME="/boot/grub/themes/Tela/theme.txt"'
   register: grubtheme
+  when: grub_installed.rc != 0
 
 - name: clone Tela theme
   git:
