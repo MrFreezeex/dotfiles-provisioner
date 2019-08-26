@@ -1,0 +1,8 @@
+---
+
+- name: install gitconfig
+  copy:
+    src: gitconfig
+    dest: ~/.gitconfig
+  become: yes
+  become_user: "{{user.name}}"

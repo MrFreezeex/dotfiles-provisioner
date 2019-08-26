@@ -27,3 +27,4 @@
   - {role: redshift, tags: ['redshift']}
   - {role: laptop, tags: ['laptop', 'xps']}
   - {role: sddm, tags: ['sddm']}
+  - {role: git, tags: ['git']}

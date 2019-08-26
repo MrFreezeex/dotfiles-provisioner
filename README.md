@@ -7,6 +7,5 @@ It's adapted to my current laptop which is a Dell XPS 7590 with a GPU.
 
 # TODO
 
-* git config
 * dnsmasq
 * secureboot scripts

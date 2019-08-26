@@ -1,0 +1,37 @@
+[core]
+	excludesfile = ~/.gitignore
+[color]
+	ui = true
+	branch = auto
+	diff = auto
+	interactive = auto
+	status = auto
+[commit]
+	verbose = true
+        gpgsign = true
+[pull]
+	rebase = true
+[branch]
+	autosetuprebase = always
+[push]
+	default = simple
+[user]
+	name = Arthur Outhenin-Chalandre
+	email = arthur@cri.epita.fr
+	signingkey = 8154CA537DDB2F08
+[core]
+	editor = "vim"
+[alias]
+    
+    lg1 = !"git log --graph --abbrev-commit --decorate --date=relative --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(red)- %an%C(reset)%C(bold cyan)%d%C(reset)' --exclude='review' --branches; git shortlog -s -n --all"
+    lg2 = !"git log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n''          %C(white)%s%C(reset) %C(dim white)- %an%C(reset)' --exclude='review'; git shortlog -s -n --all"
+    lg3 = !"git log --graph --abbrev-commit --decorate --date=relative --exclude='review'; git shortlog -s -n --all"
+    lg = !"git lg1"
+    st = status
+    ci = commit
+    br = branch
+    co = checkout
+    df = diff
+    dc = diff --cached
+    who = shortlog -s --
+    uniq = !git log --pretty=format:'%s' | sort | uniq -c | sort
