@@ -5,6 +5,7 @@
     name:
     - gnupg
     - pcsclite
+    - openssh-askpass
     - ccid
     - hopenpgp-tools
     - yubikey-personalization
