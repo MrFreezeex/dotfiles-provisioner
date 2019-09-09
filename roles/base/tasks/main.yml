@@ -9,6 +9,7 @@
     state: present
     name:
     - git
+    - most
     - virt-manager
     - qemu
     - vde2
