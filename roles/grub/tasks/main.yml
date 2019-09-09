@@ -4,6 +4,7 @@
   shell: pacman -Q grub
   register: grub_installed
   changed_when: False
+  failed_when: False
 
 - name: install dialog
   pacman:
@@ -15,7 +16,7 @@
     regexp: '^GRUB_THEME='
     line: 'GRUB_THEME="/boot/grub/themes/Tela/theme.txt"'
   register: grubtheme
-  when: grub_installed.rc != 0
+  when: grub_installed.rc == 0
 
 - name: clone Tela theme
   git:

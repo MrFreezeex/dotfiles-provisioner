@@ -66,6 +66,8 @@
     repo: https://github.com/VundleVim/Vundle.vim.git
     dest: ~/.vim/bundle/Vundle.vim
   register: vundle
+  become: yes
+  become_user: "{{user.name}}"
 
 - name: install vundle plugins
   shell: vim +PluginInstall +qall

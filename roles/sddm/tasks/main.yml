@@ -10,6 +10,13 @@
     src: sddm.conf
     dest: /etc/sddm.conf
 
+- name: install sddm theme dependencies
+  pacman:
+    name:
+      - qt5
+      - qt5-quickcontrols
+      - qt5-graphicaleffects
+
 - name: install sddm theme
   git:
     repo: https://github.com/MarianArlt/sddm-chili.git

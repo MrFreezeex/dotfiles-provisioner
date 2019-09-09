@@ -7,8 +7,7 @@
     - adobe-source-code-pro-fonts
     - cantarell-fonts
     - nerd-fonts-complete
-    - nerd-fonts
-    - termsyn-fonts
+    - termsyn-font
     - ttf-nerd-fonts-symbols
     use: pikaur
 
