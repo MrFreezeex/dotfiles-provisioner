@@ -3,6 +3,7 @@
     name:
     - polybar-git
     - ttf-nerd-fonts-symbols
+    - jsoncpp
     use: pikaur
 
 - name: create polybar conf directory
