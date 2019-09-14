@@ -2,7 +2,10 @@
 
 - name: install gitconfig
   copy:
-    src: gitconfig
-    dest: ~/.gitconfig
+    src: "{{item}}"
+    dest: "~/.{{item}}"
   become: yes
   become_user: "{{user.name}}"
+  with_items:
+    - gitignore
+    - gitconfig
