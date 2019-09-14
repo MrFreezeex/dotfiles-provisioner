@@ -59,9 +59,9 @@
   - nvidia_pm.conf
   - pcie_powersave.conf
 
-- name: install lenovo-throttling-fix-git
+- name: install throttled
   aur:
-    name: lenovo-throttling-fix-git
+    name: throttled
     use: pikaur
   notify: service lenovo_fix
 
