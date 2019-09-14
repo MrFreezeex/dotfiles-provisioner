@@ -13,6 +13,7 @@
     - gcc
     - make
     - pkg-config
+    - dunst
     - fakeroot
 
 - name: create i3 conf directory
@@ -48,3 +49,17 @@
   become: yes
   become_user: "{{user.name}}"
 
+- name: create dunst conf directory
+  file:
+    path: ~/.config/dunst
+    mode: 0700
+    state: directory
+  become: yes
+  become_user: "{{user.name}}"
+
+- name: copy dunstrc
+  copy:
+    src: dunstrc
+    dest: ~/.config/dunst/dunstrc
+  become: yes
+  become_user: "{{user.name}}"
