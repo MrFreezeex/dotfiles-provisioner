@@ -25,5 +25,5 @@
   become: yes
   become_user: "{{user.name}}"
   with_items:
-  - gpg.conf 
+  - gpg.conf
   - gpg-agent.conf

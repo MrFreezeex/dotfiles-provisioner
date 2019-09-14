@@ -1,10 +1,38 @@
 ---
 
+- name: install better i3 lock
+  aur:
+    name: i3lock-color
+    use: pikaur
+
+- name: install lock script
+  copy:
+    src: lock
+    dest: /usr/local/bin/lock
+    mode: 0555
+
+- name: install lock-suspend script
+  copy:
+    src: lock-suspend
+    dest: /usr/local/bin/lock-suspend
+    mode: 0555
+
+- name: install suspend service
+  copy:
+    src: suspend.service
+    dest: "/etc/systemd/system/suspend@{{user.name}}.service"
+    mode: 0644
+
+- name: enable suspend script
+  service:
+    name: "suspend@{{user.name}}.service"
+    enabled: yes
+
 - name: install i3 packages
   pacman:
     state: present
     name:
-    - i3
+    - i3-gaps
     - nitrogen
     - rofi
     - compton
@@ -34,7 +62,6 @@
 - name: create nitrogen conf directory
   file:
     path: ~/.config/nitrogen
-    mode: 0700
     state: directory
   become: yes
   become_user: "{{user.name}}"
@@ -52,7 +79,6 @@
 - name: create dunst conf directory
   file:
     path: ~/.config/dunst
-    mode: 0700
     state: directory
   become: yes
   become_user: "{{user.name}}"
