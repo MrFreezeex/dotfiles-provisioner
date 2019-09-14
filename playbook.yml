@@ -6,24 +6,24 @@
 
 - hosts: all
   vars_files:
-  - ../vars/user.yml
-  - ../vaulted_vars/password.yml
+  - vars/user.yml
+  - vaulted_vars/password.yml
   roles:
   - {role: user, tags: ['user']}
 
 - hosts: all
   vars_files:
-  - ../vars/user.yml
+  - vars/user.yml
   roles:
   - {role: gnupg, tags: ['gnupg']}
   - {role: grub, tags: ['grub']}
   - {role: xorg, tags: ['xorg']}
+  - {role: xinit, tags: ['xinit']}
   - {role: fonts, tags: ['fonts']}
   - {role: gtk, tags: ['gtk']}
   - {role: terminal, tags: ['terminal']}
   - {role: i3, tags: ['i3']}
   - {role: polybar, tags: ['polybar']}
-  - {role: xinit, tags: ['xinit']}
   - {role: redshift, tags: ['redshift']}
   - {role: laptop, tags: ['laptop', 'xps']}
   - {role: sddm, tags: ['sddm']}
