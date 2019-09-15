@@ -1,9 +1,5 @@
 ---
 
-- name: refresh pacman db
-  pacman:
-    update_cache: yes
-
 - name: install bunch of packages
   pacman:
     state: present
@@ -72,9 +68,3 @@
   user:
     name: aur_builder
     state: absent
-
-- name: upgrade system
-  aur:
-    upgrade: yes
-    use: pikaur
-
