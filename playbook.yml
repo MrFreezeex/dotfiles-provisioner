@@ -25,6 +25,11 @@
   - {role: i3, tags: ['i3']}
   - {role: polybar, tags: ['polybar']}
   - {role: redshift, tags: ['redshift']}
-  - {role: laptop, tags: ['laptop', 'xps']}
   - {role: sddm, tags: ['sddm']}
   - {role: git, tags: ['git']}
+
+- hosts: all
+  vars_files:
+  - vars/laptop.yml
+  roles:
+  - {role: laptop, tags: ['laptop', 'xps']}

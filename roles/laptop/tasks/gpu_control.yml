@@ -1,0 +1,28 @@
+---
+
+- name: install tmpfiles.d
+  template:
+    src: nvidia_pm.conf
+    dest: /etc/tmpfiles.d/nvidia_pm.conf
+
+- name: install systemd services
+  copy:
+    src: disable-nvidia-on-shutdown.service
+    dest: /etc/systemd/system/disable-nvidia-on-shutdown.service
+  notify: enable nvidia disable service
+
+- name: install binaries
+  template:
+    src: "{{item}}"
+    dest: "/usr/local/bin/{{item}}"
+    mode: 0755
+  with_items:
+  - unbindgpu
+  - bindgpu
+  - disablegpu
+  - enablegpu
+
+- name: install modprobe disable nvidia
+  copy:
+    src: disable-nvidia.conf
+    dest: /etc/modprobe.d/disable-nvidia.conf

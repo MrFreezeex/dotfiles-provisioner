@@ -1,0 +1,23 @@
+---
+
+- name: install throttled
+  aur:
+    name: throttled
+    use: pikaur
+  notify: service lenovo_fix
+
+- name: install lenovo_fix.conf
+  copy:
+    src: lenovo_fix.conf
+    dest: /etc/lenovo_fix.conf
+
+- name: install tlp
+  pacman:
+    name: tlp
+  notify: service tlp
+
+- name: install tlp conf
+  copy:
+    src: tlp
+    dest: /etc/default/tlp
+

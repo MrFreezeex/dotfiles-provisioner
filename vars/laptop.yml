@@ -1,0 +1,8 @@
+---
+
+xps_15_tweaks: true
+dell_tweaks: true
+gpu_control:
+    enabled: true
+    pci_id: '0000:01:00.0'
+    vfio_id: '10de 1f91'

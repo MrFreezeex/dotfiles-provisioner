@@ -1,8 +1,0 @@
-#!/bin/sh
-
-if [ ! -d "/sys/bus/pci/drivers/vfio-pci/0000:01:00.0" ]; then
-	echo "gpu already not bound" >&2
-	exit 1
-fi
-
-echo "0000:01:00.0" > "/sys/bus/pci/drivers/vfio-pci/0000:01:00.0/driver/unbind"

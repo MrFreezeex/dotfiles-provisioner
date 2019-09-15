@@ -1,0 +1,11 @@
+---
+
+- name: install modules load dell-hwmon
+  copy:
+    src: dell-hwmon.conf
+    dest: /etc/modules-load.d/dell-hwmon.conf
+
+- name: install modprobe dellhwmon
+  copy:
+    src: dell-smm-hwmon.conf
+    dest: /etc/modprobe.d/dell-smm-hwmon.conf

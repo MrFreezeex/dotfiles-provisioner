@@ -6,10 +6,8 @@
     dest: "/etc/modprobe.d/{{item}}"
   with_items:
   - blacklist.conf
-  - dell-smm-hwmon.conf
   - disable-cam.conf
   - disable-ipmi.conf
-  - disable-nvidia.conf
   - i915.conf
   - powersave.conf
   - kvm.conf
@@ -23,24 +21,15 @@
   with_items:
   - disablecam
   - enablecam
-  - unbindgpu
-  - bindgpu
-  - disablegpu
-  - enablegpu
 
-- name: install systemd services
+- name: install disable cam services
   copy:
-    src: "{{item}}"
-    dest: "/etc/systemd/system/{{item}}"
+    src: disable-cam-on-shutdown.service
+    dest: /etc/systemd/system/disable-cam-on-shutdown.service
   with_items:
-  - disable-nvidia-on-shutdown.service
   - disable-cam-on-shutdown.service
-  notify: disable device services
+  notify: enable cam disable service
 
-- name: install modules load dell-hwmon
-  copy:
-    src: dell-hwmon.conf
-    dest: /etc/modules-load.d/dell-hwmon.conf
 
 - name: install xorg conf
   copy:
@@ -53,29 +42,17 @@
 
 - name: install tmpfiles.d
   copy:
-    src: "{{item}}"
-    dest: "/etc/tmpfiles.d/{{item}}"
-  with_items:
-  - nvidia_pm.conf
-  - pcie_powersave.conf
+    src: pcie_powersave.conf
+    dest: /etc/tmpfiles.d/pcie_powersave.conf
 
-- name: install throttled
-  aur:
-    name: throttled
-    use: pikaur
-  notify: service lenovo_fix
+- name: include gpu control task
+  include: gpu_control.yml
+  when: "gpu_control.enabled"
 
-- name: install lenovo_fix.conf
-  copy:
-    src: lenovo_fix.conf
-    dest: /etc/lenovo_fix.conf
+- name: include dell tweaks
+  include: dell.yml
+  when: "dell_tweaks"
 
-- name: install tlp
-  pacman:
-    name: tlp
-  notify: service tlp
-
-- name: install tlp conf
-  copy:
-    src: tlp
-    dest: /etc/default/tlp
+- name: include xps 15 tweaks
+  include: xps_15.yml
+  when: "xps_15_tweaks"
