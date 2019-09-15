@@ -13,5 +13,6 @@
   copy:
     src: xinitrc
     dest: ~/.xinitrc
+    mode: 0755
   become: yes
   become_user: "{{user.name}}"
