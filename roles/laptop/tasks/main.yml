@@ -37,7 +37,6 @@
     dest: "/etc/X11/xorg.conf.d/{{item}}"
   with_items:
   - 01-noautogpu.conf
-  - 20-intel.conf
   - 50-synaptics.conf
 
 - name: install tmpfiles.d

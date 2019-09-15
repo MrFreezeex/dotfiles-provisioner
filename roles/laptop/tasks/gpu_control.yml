@@ -26,3 +26,8 @@
   copy:
     src: disable-nvidia.conf
     dest: /etc/modprobe.d/disable-nvidia.conf
+
+- name: install xorg conf
+  copy:
+    src: 20-intel.conf
+    dest: /etc/X11/xorg.conf.d/20-intel.conf
