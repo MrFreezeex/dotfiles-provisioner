@@ -1,0 +1,10 @@
+---
+
+- name: service dnsmasq
+  service:
+    name: dnsmasq
+    state: restarted
+    enabled: yes
+
+- name: generate resolv.conf
+  shell: resolvconf -u

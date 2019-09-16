@@ -1,0 +1,21 @@
+---
+
+- name: install dnsmasq
+  pacman:
+    name: dnsmasq
+  notify: service dnsmasq
+
+- name: install dnsmasq conf
+  copy:
+    src: "{{item}}"
+    dest: "/etc/{{item}}"
+  with_items:
+  - dnsmasq.conf
+  - resolv.dnsmasq
+  notify: service dnsmasq
+
+- name: install resolvconf.conf
+  copy:
+    src: resolvconf.conf
+    dest: /etc/resolvconf.conf
+  notify: generate resolv.conf

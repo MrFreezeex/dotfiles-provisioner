@@ -15,6 +15,7 @@
   vars_files:
   - vars/user.yml
   roles:
+  - {role: dnsmasq, tags: ['dnsmasq']}
   - {role: gnupg, tags: ['gnupg']}
   - {role: grub, tags: ['grub']}
   - {role: xorg, tags: ['xorg']}

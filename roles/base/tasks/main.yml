@@ -5,6 +5,9 @@
     state: present
     name:
     - git
+    - net-tools
+    - dnsutils
+    - ldns
     - most
     - virt-manager
     - qemu
