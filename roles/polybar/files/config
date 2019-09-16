@@ -1,4 +1,5 @@
 [bar/i3wmthemer_bar]
+monitor = ${env:MONITOR:}
 width = 100%
 height = 24
 radius = 0
@@ -35,9 +36,11 @@ cursor-scroll = ns-resize
 
 [module/i3]
 type = internal/i3
+
 format = <label-state> <label-mode>
 index-sort = true
 wrapping-scroll = false
+pin-workspaces = true
 
 label-mode-padding = 2
 label-mode-foreground = #1c1c22
