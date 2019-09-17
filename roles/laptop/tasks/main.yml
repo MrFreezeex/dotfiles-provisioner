@@ -30,6 +30,21 @@
   - disable-cam-on-shutdown.service
   notify: enable cam disable service
 
+- name: make sure synaptic is not installed
+  pacman:
+    name: xf86-input-synaptics
+    state: absent
+
+- name: uninstall synaptics conf
+  file:
+    path: /etc/X11/xorg.conf.d/50-synaptics.conf
+    state: absent
+
+- name: install libinput
+  pacman:
+    name:
+    - xf86-input-libinput
+    - xorg-xinput
 
 - name: install xorg conf
   copy:
@@ -37,7 +52,7 @@
     dest: "/etc/X11/xorg.conf.d/{{item}}"
   with_items:
   - 01-noautogpu.conf
-  - 50-synaptics.conf
+  - 42-libinput.conf
 
 - name: install tmpfiles.d
   copy:
