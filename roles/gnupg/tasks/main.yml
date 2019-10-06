@@ -29,7 +29,7 @@
   - gpg-agent.conf
 
 - name: import gpg key
-  shell: gpg --keyserver keyserver.ubuntu.com --recv-keys 8154CA537DDB2F08
+  shell: gpg --keyserver keyserver.ubuntu.com --recv-keys 0x9613cd9cd4e9b8084dd758c98154ca537ddb2f08
   register: import_key
   changed_when: "'not changed' not in import_key.stderr"
   become: yes
