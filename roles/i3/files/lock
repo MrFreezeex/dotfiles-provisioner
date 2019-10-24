@@ -1,3 +1,3 @@
 #!/bin/sh
 
-i3lock --blur=2 "$@"
+i3lock --blur=8px "$@"
