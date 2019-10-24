@@ -66,13 +66,17 @@
   become: yes
   become_user: "{{user.name}}"
 
-- name: copy nitrogen files
+- name: copy nitrogen wallpaper
   copy:
-    src: "{{item}}"
-    dest: "~/.config/nitrogen/{{item}}"
-  with_items:
-  - bg-saved.cfg
-  - wallpaper.jpg
+    src: wallpaper.jpg
+    dest: ~/.config/nitrogen/wallpaper.jpg
+  become: yes
+  become_user: "{{user.name}}"
+
+- name: copy nitrogen config
+  template:
+    src: bg-saved.cfg
+    dest: ~/.config/nitrogen/bg-saved.cfg
   become: yes
   become_user: "{{user.name}}"
 
