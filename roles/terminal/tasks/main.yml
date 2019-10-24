@@ -72,3 +72,16 @@
 - name: install vundle plugins
   shell: vim +PluginInstall +qall
   when: vimrc.changed or vundle.changed
+
+- name: create urxvt directory
+  file:
+    path: ~/.urxv/ext
+    state: directory
+    recurse: yes
+  become: yes
+  become_user: "{{user.name}}"
+
+- name: download urxvt font-size
+  get_url:
+    url: "https://raw.githubusercontent.com/majutsushi/urxvt-font-size/master/font-size"
+    dest: ~/.urxv/ext/font-size
