@@ -6,8 +6,8 @@
     enabled: yes
     state: started
 
-- name: service dockerd
+- name: socket docker
   service:
-    name: dockerd
+    name: docker.socket
     enabled: yes
     state: started
