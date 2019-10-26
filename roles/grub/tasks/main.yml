@@ -13,7 +13,7 @@
 - name: add grub theme in config
   lineinfile:
     path: /etc/default/grub
-    regexp: '^GRUB_THEME='
+    regexp: "^GRUB_THEME="
     line: 'GRUB_THEME="/boot/grub/themes/Tela/theme.txt"'
   register: grubtheme
   when: grub_installed.rc == 0

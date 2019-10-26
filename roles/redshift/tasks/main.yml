@@ -2,8 +2,7 @@
 
 - name: install redshift
   pacman:
-    name:
-    - redshift
+    name: redshift
 
 - name: create redshift conf directory
   file:

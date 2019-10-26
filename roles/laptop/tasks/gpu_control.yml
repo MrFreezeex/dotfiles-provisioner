@@ -13,8 +13,8 @@
 
 - name: install binaries
   template:
-    src: "{{item}}"
-    dest: "/usr/local/bin/{{item}}"
+    src: "{{ item }}"
+    dest: "/usr/local/bin/{{ item }}"
     mode: 0755
   with_items:
   - unbindgpu

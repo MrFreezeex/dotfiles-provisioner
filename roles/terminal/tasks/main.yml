@@ -12,38 +12,38 @@
 
 - name: install zsh plugins
   aur:
-    name: "{{item}}"
+    name: "{{ item }}"
     use: pikaur
   with_items:
-  - zsh-syntax-highlighting
-  - zsh-autosuggestions
+    - zsh-syntax-highlighting
+    - zsh-autosuggestions
 
 - name: create symlink for zsh plugins
   file:
-    src: "/usr/share/zsh/plugins/{{item}}"
-    path: "/usr/share/oh-my-zsh/plugins/{{item}}"
+    src: "/usr/share/zsh/plugins/{{ item }}"
+    path: "/usr/share/oh-my-zsh/plugins/{{ item }}"
     state: link
   with_items:
-  - zsh-autosuggestions
-  - zsh-syntax-highlighting
+    - zsh-autosuggestions
+    - zsh-syntax-highlighting
 
 - name: install zsh dotfiles
   copy:
-    src: "{{item}}"
-    dest: "~/.{{item}}"
+    src: "{{ item }}"
+    dest: "~/.{{ item }}"
   with_items:
-  - zshrc
-  - zprofile
-  - aliases
+    - zshrc
+    - zprofile
+    - aliases
   become: yes
-  become_user: "{{user.name}}"
+  become_user: "{{ user.name }}"
 
 - name: install Xresources
   copy:
     src: Xresources
     dest: ~/.Xresources
   become: yes
-  become_user: "{{user.name}}"
+  become_user: "{{ user.name }}"
 
 - name: install vim
   pacman:
@@ -58,7 +58,7 @@
     src: vimrc
     dest: ~/.vimrc
   become: yes
-  become_user: "{{user.name}}"
+  become_user: "{{ user.name }}"
   register: vimrc
 
 - name: install vundle
@@ -67,7 +67,7 @@
     dest: ~/.vim/bundle/Vundle.vim
   register: vundle
   become: yes
-  become_user: "{{user.name}}"
+  become_user: "{{ user.name }}"
 
 - name: install vundle plugins
   shell: vim +PluginInstall +qall
@@ -79,7 +79,7 @@
     state: directory
     recurse: yes
   become: yes
-  become_user: "{{user.name}}"
+  become_user: "{{ user.name }}"
 
 - name: download urxvt font-size
   get_url:

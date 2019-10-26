@@ -20,29 +20,29 @@
 - name: install suspend service
   copy:
     src: suspend.service
-    dest: "/etc/systemd/system/suspend@{{user.name}}.service"
+    dest: "/etc/systemd/system/suspend@{{ user.name }}.service"
     mode: 0644
 
 - name: enable suspend script
   service:
-    name: "suspend@{{user.name}}.service"
+    name: "suspend@{{ user.name }}.service"
     enabled: yes
 
 - name: install i3 packages
   pacman:
     state: present
     name:
-    - i3-gaps
-    - nitrogen
-    - rofi
-    - compton
-    - python-pip
-    - binutils
-    - gcc
-    - make
-    - pkg-config
-    - dunst
-    - fakeroot
+      - i3-gaps
+      - nitrogen
+      - rofi
+      - compton
+      - python-pip
+      - binutils
+      - gcc
+      - make
+      - pkg-config
+      - dunst
+      - fakeroot
 
 - name: create i3 conf directory
   file:
@@ -50,46 +50,46 @@
     mode: 0700
     state: directory
   become: yes
-  become_user: "{{user.name}}"
+  become_user: "{{ user.name }}"
 
 - name: install i3 conf
   copy:
     src: config
     dest: ~/.config/i3/config
   become: yes
-  become_user: "{{user.name}}"
+  become_user: "{{ user.name }}"
 
 - name: create nitrogen conf directory
   file:
     path: ~/.config/nitrogen
     state: directory
   become: yes
-  become_user: "{{user.name}}"
+  become_user: "{{ user.name }}"
 
 - name: copy nitrogen wallpaper
   copy:
     src: wallpaper.jpg
     dest: ~/.config/nitrogen/wallpaper.jpg
   become: yes
-  become_user: "{{user.name}}"
+  become_user: "{{ user.name }}"
 
 - name: copy nitrogen config
   template:
     src: bg-saved.cfg
     dest: ~/.config/nitrogen/bg-saved.cfg
   become: yes
-  become_user: "{{user.name}}"
+  become_user: "{{ user.name }}"
 
 - name: create dunst conf directory
   file:
     path: ~/.config/dunst
     state: directory
   become: yes
-  become_user: "{{user.name}}"
+  become_user: "{{ user.name }}"
 
 - name: copy dunstrc
   copy:
     src: dunstrc
     dest: ~/.config/dunst/dunstrc
   become: yes
-  become_user: "{{user.name}}"
+  become_user: "{{ user.name }}"

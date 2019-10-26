@@ -11,10 +11,10 @@ modprobe -r nvidia_modeset
 modprobe -r nvidia
 
 # Change NVIDIA card power control
-echo -n auto > '/sys/bus/pci/devices/{{gpu_control.pci_id}}/power/control'
+echo -n auto > '/sys/bus/pci/devices/{{ gpu_control.pci_id }}/power/control'
 sleep 1
 # change PCIe power control
-echo -n auto > '/sys/bus/pci/devices/{{gpu_control.pci_id}}/power/control'
+echo -n auto > '/sys/bus/pci/devices/{{ gpu_control.pci_id }}/power/control'
 sleep 1
 
 # Lock system from loading nvidia module

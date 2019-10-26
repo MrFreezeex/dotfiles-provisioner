@@ -3,12 +3,12 @@
 - name: install needed packages for yubikey & gnupg
   pacman:
     name:
-    - gnupg
-    - pcsclite
-    - openssh-askpass
-    - ccid
-    - hopenpgp-tools
-    - yubikey-personalization
+      - gnupg
+      - pcsclite
+      - openssh-askpass
+      - ccid
+      - hopenpgp-tools
+      - yubikey-personalization
 
 - name: create gnupg directory
   file:
@@ -16,14 +16,14 @@
     mode: 0700
     state: directory
   become: yes
-  become_user: "{{user.name}}"
+  become_user: "{{ user.name }}"
 
 - name: install gnupg and gpg-agent conf
   copy:
-    src: "{{item}}"
-    dest: "~/.gnupg/{{item}}"
+    src: "{{ item }}"
+    dest: "~/.gnupg/{{ item }}"
   become: yes
-  become_user: "{{user.name}}"
+  become_user: "{{ user.name }}"
   with_items:
   - gpg.conf
   - gpg-agent.conf
@@ -33,11 +33,11 @@
   register: import_key
   changed_when: "'not changed' not in import_key.stderr"
   become: yes
-  become_user: "{{user.name}}"
+  become_user: "{{ user.name }}"
 
 - name: retrieve ssh public key
   shell: ssh add -L | grep cardno > ~/.ssh/id_rsa_yubikey.pub
   args:
     creates: ~/.ssh/id_rsa_yubikey.pub
   become: yes
-  become_user: "{{user.name}}"
+  become_user: "{{ user.name }}"

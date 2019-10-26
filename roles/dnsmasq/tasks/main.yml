@@ -7,8 +7,8 @@
 
 - name: install dnsmasq conf
   copy:
-    src: "{{item}}"
-    dest: "/etc/{{item}}"
+    src: "{{ item }}"
+    dest: "/etc/{{ item }}"
   with_items:
   - dnsmasq.conf
   - resolv.dnsmasq

@@ -9,10 +9,10 @@ fi
 mv /etc/modprobe.d/disable-nvidia.conf /etc/modprobe.d/disable-nvidia.conf.disable
 
 # Remove NVIDIA card (currently in power/control = auto)
-echo -n 1 > '/sys/bus/pci/devices/{{gpu_control.pci_id}}/remove'
+echo -n 1 > '/sys/bus/pci/devices/{{ gpu_control.pci_id }}/remove'
 sleep 1
 # change PCIe power control
-echo -n on > '/sys/bus/pci/devices/{{gpu_control.pci_id}}/power/control'
+echo -n on > '/sys/bus/pci/devices/{{ gpu_control.pci_id }}/power/control'
 sleep 1
 # rescan for NVIDIA card (defaults to power/control = on)
 echo -n 1 > /sys/bus/pci/rescan

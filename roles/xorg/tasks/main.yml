@@ -2,8 +2,7 @@
 
 - name: make sure xorg is installed
   pacman:
-    name:
-    - xorg
+    name: xorg
 
 - name: install xorg keyboard conf
   copy:

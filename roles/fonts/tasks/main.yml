@@ -3,18 +3,18 @@
 - name: install fonts
   aur:
     name:
-    - ttf-font-awesome
-    - adobe-source-code-pro-fonts
-    - cantarell-fonts
-    - nerd-fonts-complete
-    - termsyn-font
-    - ttf-nerd-fonts-symbols
+      - ttf-font-awesome
+      - adobe-source-code-pro-fonts
+      - cantarell-fonts
+      - nerd-fonts-complete
+      - termsyn-font
+      - ttf-nerd-fonts-symbols
     use: pikaur
 
 - name: install font manager
   aur:
     name:
-    - font-manager
+      - font-manager
     use: pikaur
 
 - name: install xorg conf

@@ -2,32 +2,32 @@
 
 - name: install modprobe conf
   copy:
-    src: "{{item}}"
-    dest: "/etc/modprobe.d/{{item}}"
+    src: "{{ item }}"
+    dest: "/etc/modprobe.d/{{ item }}"
   with_items:
-  - blacklist.conf
-  - disable-cam.conf
-  - disable-ipmi.conf
-  - i915.conf
-  - powersave.conf
-  - kvm.conf
-  - scsi_mod.conf
+    - blacklist.conf
+    - disable-cam.conf
+    - disable-ipmi.conf
+    - i915.conf
+    - powersave.conf
+    - kvm.conf
+    - scsi_mod.conf
   
 - name: install binaries
   copy:
-    src: "{{item}}"
-    dest: "/usr/local/bin/{{item}}"
+    src: "{{ item }}"
+    dest: "/usr/local/bin/{{ item }}"
     mode: 0755
   with_items:
-  - disablecam
-  - enablecam
+    - disablecam
+    - enablecam
 
 - name: install disable cam services
   copy:
     src: disable-cam-on-shutdown.service
     dest: /etc/systemd/system/disable-cam-on-shutdown.service
   with_items:
-  - disable-cam-on-shutdown.service
+    - disable-cam-on-shutdown.service
   notify: enable cam disable service
 
 - name: make sure synaptic is not installed
@@ -43,16 +43,16 @@
 - name: install libinput
   pacman:
     name:
-    - xf86-input-libinput
-    - xorg-xinput
+      - xf86-input-libinput
+      - xorg-xinput
 
 - name: install xorg conf
   copy:
-    src: "{{item}}"
-    dest: "/etc/X11/xorg.conf.d/{{item}}"
+    src: "{{ item }}"
+    dest: "/etc/X11/xorg.conf.d/{{ item }}"
   with_items:
-  - 01-noautogpu.conf
-  - 42-libinput.conf
+    - 01-noautogpu.conf
+    - 42-libinput.conf
 
 - name: install tmpfiles.d
   copy:

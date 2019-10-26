@@ -4,8 +4,8 @@
   pacman:
     state: present
     name:
-    - gtk2
-    - gtk3
+      - gtk2
+      - gtk3
 
 - name: install gtk2 conf
   copy:

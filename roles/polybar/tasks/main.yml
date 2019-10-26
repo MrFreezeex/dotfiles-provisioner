@@ -1,9 +1,9 @@
 - name: install polybar
   aur:
     name:
-    - polybar-git
-    - ttf-nerd-fonts-symbols
-    - jsoncpp
+      - polybar-git
+      - ttf-nerd-fonts-symbols
+      - jsoncpp
     use: pikaur
 
 - name: create polybar conf directory
@@ -35,5 +35,5 @@
     dest: "/usr/local/bin/{{item}}"
     mode: 0755
   with_items:
-  - notify-volume
-  - notify-light
+    - notify-volume
+    - notify-light

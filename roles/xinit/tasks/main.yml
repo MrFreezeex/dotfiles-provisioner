@@ -15,4 +15,4 @@
     dest: ~/.xinitrc
     mode: 0755
   become: yes
-  become_user: "{{user.name}}"
+  become_user: "{{ user.name }}"
