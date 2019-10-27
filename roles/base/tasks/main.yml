@@ -23,6 +23,7 @@
       - chromium
       - firefox
       - jq
+      - arandr
 
   notify:
     - service libvirtd
