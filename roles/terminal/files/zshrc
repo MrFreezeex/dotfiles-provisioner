@@ -78,6 +78,7 @@ autoload -U compinit
 compinit
 
 bindkey -e
+bindkey \^U backward-kill-line
 
 source $ZSH/oh-my-zsh.sh
 
