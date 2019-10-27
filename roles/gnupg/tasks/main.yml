@@ -9,6 +9,7 @@
       - ccid
       - hopenpgp-tools
       - yubikey-personalization
+      - pinentry
 
 - name: create gnupg directory
   file:
