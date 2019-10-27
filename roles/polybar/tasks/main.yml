@@ -1,10 +1,35 @@
+---
+
+- name: remove polybar-git
+  pacman:
+    name: polybar-git
+    state: absent
+
 - name: install polybar
   aur:
     name:
-      - polybar-git
+      - polybar
       - ttf-nerd-fonts-symbols
       - jsoncpp
     use: pikaur
+
+- name: Create custom fact directory
+  file:
+    path: /etc/ansible/facts.d
+    state: directory
+
+- name: Insert custom fact file
+  copy:
+    src: "{{ item }}"
+    dest: "/etc/ansible/facts.d/{{ item }}"
+    mode: 0755
+  loop:
+    - batteries.fact
+    - wifi_interfaces.fact
+
+- name: reload ansible_local
+  setup:
+    filter: ansible_local
 
 - name: create polybar conf directory
   file:
@@ -15,7 +40,7 @@
   become_user: "{{user.name}}"
 
 - name: install polybar conf
-  copy:
+  template:
     src: config
     dest: ~/.config/polybar/config
   become: yes

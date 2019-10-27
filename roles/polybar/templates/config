@@ -24,9 +24,20 @@ font-0 = "Source Code Pro Semibold:size=10;1"
 font-1 = "Font Awesome 5 Free:style=Solid:size=10;1"
 font-2 = "Font Awesome 5 Brands:size=10;1"
 
+{% if ansible_local.wifi_interfaces %}
 modules-left = wlan title
+{% else %}
+modules-left = title
+{% endif %}
 modules-center = i3
-modules-right = battery temperature cpu memory date powermenu
+
+{% set modules_right = "temperature cpu memory date powermenu" %}
+
+{% if ansible_local.batteries %}
+{% set modules_right = "battery " + modules_right -%}
+{% endif %}
+
+modules-right = {{ modules_right }}
 
 tray-position = left
 ;tray-padding =
@@ -65,9 +76,10 @@ label-urgent = %index%
 label-urgent-background = #BA2922
 label-urgent-padding = 2
 
+{% if ansible_local.wifi_interfaces %}
 [module/wlan]
 type = internal/network
-interface = wlp59s0
+interface = {{ ansible_local.wifi_interfaces[0] }}
 interval = 3.0
 
 format-connected = <ramp-signal> <label-connected>
@@ -84,6 +96,7 @@ ramp-signal-2 = 
 ramp-signal-3 = 
 ramp-signal-4 = 
 ramp-signal-foreground = #1c1c22
+{% endif %}
 
 [module/eth]
 type = internal/network
@@ -153,6 +166,7 @@ menu-3-0-exec = pkill -KILL -u $USER
 menu-3-1 = cancel
 menu-3-1-exec = menu-open-0
 
+{% if ansible_local.batteries %}
 [module/battery]
 type = internal/battery
 
@@ -161,7 +175,7 @@ full-at = 90
 
 ; Use the following command to list batteries and adapters:
 ; $ ls -1 /sys/class/power_supply/
-battery = BAT0
+battery = {{ ansible_local.batteries[0] }}
 adapter = AC
 
 ; If an inotify event haven't been reported in this many
@@ -245,6 +259,7 @@ animation-discharging-3 = 
 animation-discharging-4 = 
 ; Framerate in milliseconds
 animation-discharging-framerate = 500
+{% endif %}
 
 [module/backlight]
 type = internal/xbacklight

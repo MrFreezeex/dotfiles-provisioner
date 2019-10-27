@@ -1,0 +1,17 @@
+#!/bin/sh
+
+interfaces=`iw dev 2>/dev/null | grep Interface`
+
+IFS=$'\n'
+INTERFACES=""
+
+for interface in $interfaces; do
+    interface=`echo "$interface" | cut -d' ' -f2`
+    INTERFACES="\"$interface\", $INTERFACES"
+done
+
+INTERFACES="`echo "$INTERFACES" | sed 's/..$//'`"
+
+echo '['
+echo -e "\t$INTERFACES"
+echo ']'
