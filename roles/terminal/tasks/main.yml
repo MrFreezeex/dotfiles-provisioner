@@ -85,3 +85,5 @@
   get_url:
     url: "https://raw.githubusercontent.com/majutsushi/urxvt-font-size/master/font-size"
     dest: ~/.urxv/ext/font-size
+  become: yes
+  become_user: "{{ user.name }}"
