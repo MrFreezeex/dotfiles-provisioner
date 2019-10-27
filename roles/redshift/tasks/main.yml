@@ -4,17 +4,32 @@
   pacman:
     name: redshift
 
+- name: install geoclue
+  pacman:
+    name: geoclue
+
 - name: create redshift conf directory
   file:
     path: ~/.config/redshift
     mode: 0700
     state: directory
   become: yes
-  become_user: "{{user.name}}"
+  become_user: "{{ user.name }}"
 
 - name: install redshift config
   copy:
     src: redshift.conf
     dest: ~/.config/redshift/redshift.conf
+  notify: service redshift
   become: yes
-  become_user: "{{user.name}}"
+  become_user: "{{ user.name }}"
+
+- name: install geoclue config
+  blockinfile:
+    path: /etc/geoclue/geoclue.conf
+    block: |
+      [redshift]
+      allowed=true
+      system=false
+      users=
+  notify: service geoclue

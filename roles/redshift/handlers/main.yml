@@ -1,0 +1,16 @@
+---
+
+- name: service geoclue
+  service:
+    name: geoclue
+    state: restarted
+    enabled: yes
+
+- name: service redshift
+  service:
+    name: redshift
+    scope: user
+    state: restarted
+    enabled: yes
+  become: yes
+  become_user: "{{ user.name }}"
