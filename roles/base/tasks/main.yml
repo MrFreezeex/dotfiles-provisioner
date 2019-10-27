@@ -22,10 +22,11 @@
       - vlc
       - chromium
       - firefox
+      - jq
 
   notify:
     - service libvirtd
-    - service dockerd
+    - socket docker
 
 - name: check if pikaur is installed
   shell: pacman -Q pikaur
