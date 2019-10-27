@@ -7,7 +7,7 @@ volume="`pactl list sinks | grep '^[[:space:]]Volume:' | \
 mute="$(amixer -c 0 get Master | tail -1 | awk '{print $6}' | sed 's/[^a-z]*//g')"
 
 if [ "$mute" = "off" ]; then
-	dunstify -a "changeVolume" -u low -i audio-volume-muted -r "$msgId" "Volume muted" 
+	dunstify -a "Volume" -u low -i audio-volume-muted -r "$msgId" "Volume muted" 
 	exit 0
 fi
 
