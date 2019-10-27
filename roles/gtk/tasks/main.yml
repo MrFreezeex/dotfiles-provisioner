@@ -6,6 +6,7 @@
     name:
       - gtk2
       - gtk3
+      - gtk-engine-murrine
 
 - name: install gtk2 conf
   copy:
