@@ -1,8 +1,8 @@
 ---
 
-- name: service dnsmasq
+- name: service dnscrypt-proxy
   service:
-    name: dnsmasq
+    name: dnscrypt-proxy.service
     state: restarted
     enabled: yes
 

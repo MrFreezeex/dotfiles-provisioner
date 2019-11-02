@@ -1,0 +1,25 @@
+---
+
+- name: uninstall dnsmasq
+  pacman:
+    name: dnsmasq
+    state: absent
+
+- name: install dnscrypt-proxy
+  pacman:
+    name: dnscrypt-proxy
+
+- name: install dnscrypt-proxy conf
+  copy:
+    src: "{{ item }}"
+    dest: "/etc/dnscrypt-proxy/{{ item }}"
+  loop:
+    - dnscrypt-proxy.toml
+    - forwarding-rules.txt
+  notify: service dnscrypt-proxy
+
+- name: install resolvconf.conf
+  copy:
+    src: resolvconf.conf
+    dest: /etc/resolvconf.conf
+  notify: generate resolv.conf
