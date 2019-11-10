@@ -7,7 +7,6 @@
   with_items:
     - blacklist.conf
     - disable-cam.conf
-    - disable-ipmi.conf
     - i915.conf
     - powersave.conf
     - kvm.conf

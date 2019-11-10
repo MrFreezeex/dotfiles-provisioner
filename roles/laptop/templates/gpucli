@@ -1,0 +1,160 @@
+#!/usr/bin/env bash
+
+# enabling nvidia GPU without starting a new x server
+
+# forked from nvidia-xrun
+
+
+CONTROLLER_BUS_ID="{{ gpu_control.controller_bus_id }}"
+DEVICE_BUS_ID="{{ gpu_control.device_bus_id }}"
+
+BUS_RESCAN_WAIT_SEC=1
+MODULES_LOAD=(nvidia nvidia_uvm nvidia_modeset "nvidia_drm modeset=1")
+MODULES_UNLOAD=(nvidia_drm nvidia_modeset nvidia_uvm nvidia)
+BLACKLIST=/etc/modprobe.d/blacklist.conf
+DISABLE_NVIDIA=/etc/modprobe.d/disable-nvidia.conf
+
+BIN_NAME=${0##*/}
+
+ERROR_RETURN_VALUE=1
+
+function initialize {
+
+if ! ls $DISABLE_NVIDIA* 1> /dev/null 2>&1; then
+    sudo tee $DISABLE_NVIDIA <<<"install nvidia /bin/false"
+else
+    echo "Nvidia module already disabled"
+fi
+
+if [[ ! -f $BLACKLIST ]]; then
+    sudo touch $BLACKLIST;
+else
+    echo "blacklist.conf exists"
+fi
+
+if [[ ! $(cat $BLACKLIST| grep nvidia) ]]; then
+cat <<EOF | sudo tee -a $BLACKLIST
+blacklist nvidia
+blacklist nvidia-drm
+blacklist nvidia-modeset
+blacklist nvidia-uvm
+blacklist ipmi_msghandler
+blacklist ipmi_devintf
+EOF
+else
+   echo "Modules already blacklisted"
+fi
+echo "Now you are ready to go."
+}
+
+function gpu_on {
+
+    if [[ $(lsmod | grep nvidia) ]]; then 
+        echo "Error: $ERROR_RETURN_VALUE - Nvidia card loaded already" 1>&2
+        exit $ERROR_RETURN_VALUE
+    fi
+	
+    if [[ $(lsmod | grep nouveau) ]]; then
+	echo "Error: $ERROR_RETURN_VALUE - Nouveau module owns the graphic card! Run $0 --init again and reboot, or if you know what you are doing, modprobe -r nouveau modules." 1>&2
+	exit $ERROR_RETURN_VALUE 
+    fi
+
+    sudo mv $DISABLE_NVIDIA $DISABLE_NVIDIA.disable
+   
+    echo 'Turning the PCIe controller on to allow card rescan'
+    sudo tee /sys/bus/pci/devices/${CONTROLLER_BUS_ID}/power/control <<<on
+    echo 'Waiting 1 second'
+    sleep 1
+
+    if [[ ! -d /sys/bus/pci/devices/${DEVICE_BUS_ID} ]]; then 
+        echo 'Rescanning PCI devices'
+        sudo tee /sys/bus/pci/rescan <<<1
+        echo "Waiting ${BUS_RESCAN_WAIT_SEC} second for rescan"
+        sleep ${BUS_RESCAN_WAIT_SEC}
+    fi
+    echo 'Turning the card on' 
+    sudo tee /sys/bus/pci/devices/${DEVICE_BUS_ID}/power/control <<<on
+
+    for module in "${MODULES_LOAD[@]}" 
+    do 
+        echo "Loading module ${module}" 
+        sudo modprobe ${module}
+    done
+}
+
+function gpu_off {
+
+    if [[ ! $(lsmod | grep nvidia) ]]; then 
+        echo "Error : $ERROR_RETURN_VALUE - No Nvidia card loaded" 1>&2
+        exit $ERROR_RETURN_VALUE
+fi
+
+    for module in "${MODULES_UNLOAD[@]}" 
+    do
+        echo "Unloading module ${module}"
+        sudo modprobe -r ${module}
+    done
+    if [[ $(lsmod | grep nvidia) ]]; then
+	echo "Error : $ERROR_RETURN_VALUE - Module unload failed. Run nvidia-smi to check running process and kill them " 1>&2
+	exit $ERROR_RETURN_VALUE
+    else
+        echo 'Removing Nvidia bus from the kernel'
+        sudo tee /sys/bus/pci/devices/${DEVICE_BUS_ID}/remove <<<1
+        echo 'Enabling powersave for the PCIe controller'
+        sudo tee /sys/bus/pci/devices/${CONTROLLER_BUS_ID}/power/control <<<auto
+        sudo mv $DISABLE_NVIDIA.disable $DISABLE_NVIDIA
+fi
+}
+
+function gpu_powersave {
+
+    if [[ ! $(lsmod | grep nvidia) ]]; then 
+        echo "Error : $ERROR_RETURN_VALUE - No Nvidia card loaded" 1>&2 
+        exit $ERROR_RETURN_VALUE
+    fi
+
+    for module in "${MODULES_UNLOAD[@]}" 
+    do
+        echo "Unloading module ${module}"
+        sudo modprobe -r ${module}
+    done
+
+    if [[ $(lsmod | grep nvidia) ]]; then
+	echo "Error : $ERROR_RETURN_VALUE Module unload failed. Run nvidia-smi to check running process and kill them " 1>&2
+	exit $ERROR_RETURN_VALUE
+    else
+    echo 'Enabling powersave for the graphic card'
+    sudo tee /sys/bus/pci/devices/${DEVICE_BUS_ID}/power/control <<<auto
+    echo 'Enabling powersave for the PCIe controller'
+    sudo tee /sys/bus/pci/devices/${CONTROLLER_BUS_ID}/power/control <<<auto
+    sudo mv $DISABLE_NVIDIA.disable $DISABLE_NVIDIA
+    fi
+}
+
+function help {
+cat <<EOF
+
+before running the script, use following commands to find appropriate controller bus id and device bus id respectively 
+echo "0000:\$(lspci | grep Controller | grep PCI | awk '{print \$1}')"
+echo "0000:\$(lspci | grep NVIDIA | awk '{print \$1}')"
+and edit the macros CONTROLLER_BUS_ID and DEVICE_BUS_ID accordingly.
+# This procedure can be done automatically, but will significantly increase the complexity and time consumption of the script, thus manual intervention is the better choice.
+# the second command may return 0000: if nvidia dvice bus is removed from the kernel.
+
+$BIN_NAME --init only needs to be run once. 
+
+$BIN_NAME --init 			initialize
+$BIN_NAME --on 			turn the nvidia GPU on
+$BIN_NAME --off  			turn the nvidia GPU off
+$BIN_NAME --powersave 	    	switch the nvidia GPU to power save mode (not sure if it works)
+
+EOF
+}
+
+case $1 in
+    "--init") initialize ;;
+    "--on") gpu_on ;;
+    "--off") gpu_off ;;
+    "--powersave") gpu_powersave ;;
+    *) help ;;
+esac
