@@ -72,6 +72,7 @@ set incsearch
 set tabstop=8
 set shiftwidth=4
 set softtabstop=-1
+autocmd FileType yaml setlocal sw=2
 
 set expandtab smarttab
 set autoindent smartindent
@@ -87,12 +88,12 @@ noremap k gk
 cnoreabbrev w!! w !sudo tee % >/dev/null
 
 set viminfo='20,\"50,<100,n~/.vimtmp/viminfo
-silent !mkdir -p ~/.vimtmp/
+silent !mkdir -p ~/.vimtmp/ > /dev/null
 
 " save undo
 set undofile
 set undodir=~/.vimtmp/undo
-silent !mkdir -p ~/.vimtmp/undo
+silent !mkdir -p ~/.vimtmp/undo > /dev/null
 
 " per .git vim configs
 " just `git config vim.settings "expandtab sw=4 sts=4"` in a git repository
