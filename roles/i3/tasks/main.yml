@@ -28,21 +28,24 @@
     name: "suspend@{{ user.name }}.service"
     enabled: yes
 
-- name: install i3 packages
+- name: install dependencies
   pacman:
-    state: present
     name:
-      - i3-gaps
-      - nitrogen
-      - rofi
-      - compton
       - python-pip
       - binutils
       - gcc
       - make
       - pkg-config
-      - dunst
       - fakeroot
+
+- name: install i3 packages
+  pacman:
+    name:
+      - i3-gaps
+      - nitrogen
+      - rofi
+      - compton
+      - dunst
 
 - name: create i3 conf directory
   file:

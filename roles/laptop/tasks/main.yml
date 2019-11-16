@@ -54,9 +54,9 @@
     - 42-libinput.conf
 
 - name: install tmpfiles.d
-  copy:
-    src: pcie_powersave.conf
-    dest: /etc/tmpfiles.d/pcie_powersave.conf
+  file:
+    path: /etc/tmpfiles.d/pcie_powersave.conf
+    state: absent
 
 - name: include gpu control task
   include: gpu_control.yml
