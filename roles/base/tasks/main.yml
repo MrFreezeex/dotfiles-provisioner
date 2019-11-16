@@ -35,33 +35,34 @@
   changed_when: False
   failed_when: False
 
-- user:
-    name: aur_builder
-    group: wheel
-  when: pikaur_installed.rc != 0
-
-- name: clone pikaur
-  git:
-    repo: https://aur.archlinux.org/pikaur.git
-    dest: /tmp/pikaur-clone
-  become: yes
-  become_user: aur_builder
-  when: pikaur_installed.rc != 0
-
-- lineinfile:
-    path: /etc/sudoers.d/11-install-aur_builder
-    line: "aur_builder ALL=(ALL) NOPASSWD: /usr/bin/pacman"
-    create: yes
-    validate: "visudo -cf %s"
-  when: pikaur_installed.rc != 0
-
+- debug: var=pikaur_installed
 - name: install pikaur
-  shell: makepkg -fsri --noconfirm
-  args:
-    chdir: /tmp/pikaur-clone
-  become: yes
-  become_user: aur_builder
-  when: pikaur_installed.rc != 0
+  when: "not pikaur_installed.skipped and pikaur_installed.rc != 0"
+  block:
+  - name: create user aur_builder
+    user:
+      name: aur_builder
+      group: wheel
+
+  - name: clone pikaur
+    git:
+      repo: https://aur.archlinux.org/pikaur.git
+      dest: /tmp/pikaur-clone
+    become: yes
+    become_user: aur_builder
+
+  - lineinfile:
+      path: /etc/sudoers.d/11-install-aur_builder
+      line: "aur_builder ALL=(ALL) NOPASSWD: /usr/bin/pacman"
+      create: yes
+      validate: "visudo -cf %s"
+
+  - name: install pikaur
+    shell: makepkg -fsri --noconfirm
+    args:
+      chdir: /tmp/pikaur-clone
+    become: yes
+    become_user: aur_builder
 
 - name: remove pikaur installation files
   file:

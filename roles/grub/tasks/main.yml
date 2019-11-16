@@ -16,7 +16,7 @@
     regexp: "^GRUB_THEME="
     line: 'GRUB_THEME="/boot/grub/themes/Tela/theme.txt"'
   register: grubtheme
-  when: grub_installed.rc == 0
+  when: "not grub_installed.skipped and grub_installed.rc == 0"
 
 - name: clone Tela theme
   git:
