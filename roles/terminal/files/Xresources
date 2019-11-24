@@ -39,7 +39,7 @@
 ! Cursor
 
 Xcursor.theme:			    DMZ-White
-Xcursor.size:                       16
+Xcursor.size:                       42
 
 ! Font
 
@@ -54,7 +54,7 @@ Xcursor.size:                       16
 ! URxvt
 
 URxvt*termName: rxvt-unicode-256color
-URxvt.font: xft:DejaVuSansMono Nerd Font:pixelsize=14
+URxvt.font: xft:DejaVuSansMono Nerd Font:pixelsize=20
 URxvt.depth:                      32
 URxvt.background:                 [80]base000
 URxvt*scrollBar:                  false

@@ -1,117 +1,64 @@
-# If you come from bash you might have to change your $PATH.
-# export PATH=$HOME/bin:/usr/local/bin:$PATH
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
 
-# Path to your oh-my-zsh installation.
-export ZSH="/usr/share/oh-my-zsh"
-export EDITOR=vim
-export PAGER=most
+export ZSH=/usr/share/zsh
 
-# it'll load a random theme each time that oh-my-zsh is loaded.
-# See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
-ZSH_THEME="agnoster"
+source "$ZSH/plugin-managers/zplugin/zplugin.zsh"
+autoload -Uz _zplugin
+(( ${+_comps} )) && _comps[zplugin]=_zplugin
 
-# Appends every command to the history file once it is executed
+setopt promptsubst
 setopt inc_append_history
-# Reloads the history whenever you use it
 setopt share_history
-
-# Set list of themes to load
-# Setting this variable when ZSH_THEME=random
-# cause zsh load theme from this variable instead of
-# looking in ~/.oh-my-zsh/themes/
-# An empty array have no effect
-# ZSH_THEME_RANDOM_CANDIDATES=( "robbyrussell" "agnoster" )
-
-# Uncomment the following line to use case-sensitive completion.
-# CASE_SENSITIVE="true"
-
-# Uncomment the following line to use hyphen-insensitive completion. Case
-# sensitive completion must be off. _ and - will be interchangeable.
-# HYPHEN_INSENSITIVE="true"
-
-# Uncomment the following line to disable bi-weekly auto-update checks.
-# DISABLE_AUTO_UPDATE="true"
-
-# Uncomment the following line to change how often to auto-update (in days).
-# export UPDATE_ZSH_DAYS=13
-
-# Uncomment the following line to disable colors in ls.
-# DISABLE_LS_COLORS="true"
-
-# Uncomment the following line to disable auto-setting terminal title.
-# DISABLE_AUTO_TITLE="true"
-
-# Uncomment the following line to enable command auto-correction.
-# ENABLE_CORRECTION="true"
-
-# Uncomment the following line to display red dots whilst waiting for completion.
-# COMPLETION_WAITING_DOTS="true"
-
-# Uncomment the following line if you want to disable marking untracked files
-# under VCS as dirty. This makes repository status check for large repositories
-# much, much faster.
-# DISABLE_UNTRACKED_FILES_DIRTY="true"
-
-# Uncomment the following line if you want to change the command execution time
-# stamp shown in the history command output.
-# You can set one of the optional three formats:
-# "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
-# or set a custom format using the strftime function format specifications,
-# see 'man strftime' for details.
-# HIST_STAMPS="mm/dd/yyyy"
-
-# Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
-# Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
-# Example format: plugins=(rails git textmate ruby lighthouse)
-# Add wisely, as too many plugins slow down shell startup.
-plugins=(
-  git
-  zsh-syntax-highlighting
-  zsh-autosuggestions
-  colored-man-pages
-  colorize
-)
-
-ZSH_COLORIZE_STYLE="colorful"
-
-autoload -U compinit
-compinit
+setopt extendedglob
 
 bindkey -e
 bindkey \^U backward-kill-line
 
-source $ZSH/oh-my-zsh.sh
-
-# User configuration
-
-# export MANPATH="/usr/local/man:$MANPATH"
-
-# You may need to manually set your language environment
-# export LANG=en_US.UTF-8
-
-autoload -U colors && colors
-if [[ -n $SSH_CONNECTION ]]; then
-  PROMPT="%{$fg_bold[red]%}[SSH]%{$reset_color%}$PROMPT"
-fi
-
-# Compilation flags
-# export ARCHFLAGS="-arch x86_64"
-
-# ssh
-# export SSH_KEY_PATH="~/.ssh/rsa_id"
-
-# Set personal aliases, overriding those provided by oh-my-zsh libs,
-# plugins, and themes. Aliases can be placed here, though oh-my-zsh
-# users are encouraged to define aliases within the ZSH_CUSTOM folder.
-# For a full list of active aliases, run `alias`.
-
-source <(kubectl completion zsh)
-
 source ~/.aliases
 
-# Plugins settings
-export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE=fg=8
+zplugin ice wait lucid atload"_zsh_autosuggest_start"
+zplugin light zsh-users/zsh-autosuggestions
 
-export GPG_TTY="$(tty)"
-export SSH_AUTH_SOCK="/run/user/$UID/gnupg/S.gpg-agent.ssh"
-gpg-connect-agent updatestartuptty /bye >/dev/null
+zplugin ice wait lucid blockf atpull'zplugin creinstall -q .' as"completion"
+zplugin light zsh-users/zsh-completions
+
+zplugin ice wait lucid atinit"zpcompinit; zpcdreplay"
+zplugin light zdharma/fast-syntax-highlighting
+zplugin ice wait lucid
+zplugin load zdharma/history-search-multi-word
+
+zplugin ice depth=1
+zplugin light romkatv/powerlevel10k
+
+zplugin ice wait lucid from"gh-r" as"program"
+zplugin load junegunn/fzf-bin
+
+zplugin ice wait lucid atclone"dircolors -b LS_COLORS > clrs.zsh" \
+    atpull'%atclone' pick"clrs.zsh" nocompile'!' \
+    atload'zstyle ":completion:*" list-colors “${(s.:.)LS_COLORS}”'
+zplugin light trapd00r/LS_COLORS
+
+zplugin ice wait lucid from"gh-r" as"program" mv"docker* -> docker-compose" \
+    bpick"*linux*" as"completion"
+zplugin load docker/compose
+
+# Vim repository on GitHub – a typical source code that needs compilation – Zplugin
+# can manage it for you if you like, run `./configure` and other `make`, etc. stuff.
+# Ice-mod `pick` selects a binary program to add to $PATH. You could also install the
+# package under the path $ZPFX, see: http://zdharma.org/zplugin/wiki/Compiling-programs
+#zplugin ice as"program" atclone"rm -f src/auto/config.cache; ./configure" \
+ #   atpull"%atclone" make pick"src/vim"
+#zplugin light vim/vim
+
+zplugin ice wait lucid as"program" pick"$ZPFX/bin/git-*" make"PREFIX=$ZPFX"
+zplugin light tj/git-extras
+
+zplugin ice wait lucid as"completion"
+zplugin snippet OMZ::plugins/kubectl/kubectl.plugin.zsh
+
+zplugin ice wait lucid
+zplugin snippet OMZ::plugins/gpg-agent/gpg-agent.plugin.zsh
+
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
