@@ -88,12 +88,12 @@ noremap k gk
 cnoreabbrev w!! w !sudo tee % >/dev/null
 
 set viminfo='20,\"50,<100,n~/.vimtmp/viminfo
-silent !mkdir -p ~/.vimtmp/ > /dev/null
+call system('/bin/mkdir -p ~/.vimtmp')
 
 " save undo
 set undofile
 set undodir=~/.vimtmp/undo
-silent !mkdir -p ~/.vimtmp/undo > /dev/null
+call system('mkdir -p ~/.vimtmp/undo')
 
 " per .git vim configs
 " just `git config vim.settings "expandtab sw=4 sts=4"` in a git repository

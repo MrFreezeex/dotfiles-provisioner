@@ -18,6 +18,11 @@ bindkey \^U backward-kill-line
 
 source ~/.aliases
 
+zplugin ice wait"0" silent pick"history.zsh" lucid
+zplugin snippet OMZ::lib/history.zsh
+zplugin ice wait"0" silent pick"history.plugin.zsh" lucid
+zplugin snippet OMZ::plugins/history/history.plugin.zsh
+
 zplugin ice wait lucid atload"_zsh_autosuggest_start"
 zplugin light zsh-users/zsh-autosuggestions
 
