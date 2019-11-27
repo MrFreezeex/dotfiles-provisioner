@@ -54,7 +54,7 @@ max_clients = 250
 ipv4_servers = true
 
 # Use servers reachable over IPv6 -- Do not enable if you don't have IPv6 connectivity
-ipv6_servers = false
+ipv6_servers = true
 
 # Use servers implementing the DNSCrypt protocol
 dnscrypt_servers = true
@@ -66,7 +66,7 @@ doh_servers = false
 ## Require servers defined by remote sources to satisfy specific properties
 
 # Server must support DNS security extensions (DNSSEC)
-require_dnssec = false
+require_dnssec = true
 
 # Server must not log user queries (declarative)
 require_nolog = true
@@ -155,12 +155,12 @@ cert_refresh_delay = 240
 ## This may improve privacy but can also have a significant impact on CPU usage
 ## Only enable if you don't have a lot of network load
 
-# dnscrypt_ephemeral_keys = false
+dnscrypt_ephemeral_keys = true
 
 
 ## DoH: Disable TLS session tickets - increases privacy but also latency
 
-# tls_disable_session_tickets = false
+tls_disable_session_tickets = true
 
 
 ## DoH: Use a specific cipher suite instead of the server preference
@@ -201,7 +201,7 @@ fallback_resolver = '9.9.9.9:53'
 ## Never let dnscrypt-proxy try to use the system DNS settings;
 ## unconditionally use the fallback resolver.
 
-ignore_system_dns = false
+ignore_system_dns = true
 
 
 ## Maximum time (in seconds) to wait for network connectivity before
@@ -406,12 +406,12 @@ cache_neg_max_ttl = 600
 
   ## Path to the file of blocking rules (absolute, or relative to the same directory as the executable file)
 
-  # blacklist_file = '/etc/dnscrypt-proxy/blacklist.txt'
+  blacklist_file = '/etc/dnscrypt-proxy/blacklist.txt'
 
 
   ## Optional path to a file logging blocked queries
 
-  # log_file = '/var/log/dnscrypt-proxy/blocked.log'
+  log_file = '/var/log/dnscrypt-proxy/blocked.log'
 
 
   ## Optional log format: tsv or ltsv (default: tsv)

@@ -1,13 +1,13 @@
 ---
 
-- name: uninstall dnsmasq
-  pacman:
-    name: dnsmasq
-    state: absent
-
 - name: install dnscrypt-proxy
   pacman:
     name: dnscrypt-proxy
+
+- name: check if blacklist script exist
+  stat:
+    path: /etc/dnscrypt-proxy/blacklist-script/
+  register: blacklist_script
 
 - name: install dnscrypt-proxy conf
   copy:
@@ -17,6 +17,36 @@
     - dnscrypt-proxy.toml
     - forwarding-rules.txt
   notify: service dnscrypt-proxy
+
+- name: clone dnscryt repo
+  git:
+    dest: /etc/dnscrypt-proxy/repository
+    repo: https://github.com/DNSCrypt/dnscrypt-proxy.git
+
+- name: install regen_blacklist.sh
+  copy:
+    src: regen_blacklist.sh
+    dest: /etc/dnscrypt-proxy/regen_blacklist.sh
+    mode: "755"
+
+- name: regen blacklist
+  shell: "ANSIBLE_CHECK_INITIAL=1 /etc/dnscrypt-proxy/regen_blacklist.sh"
+  register: regen_blacklist
+  changed_when: "regen_blacklist.rc == 0"
+  failed_when: False
+  notify: service dnscrypt-proxy
+
+- name: install cronie
+  pacman:
+    name: cronie
+
+- name: install cron regen blacklist
+  cron:
+    name: dnscrypt_regen_blacklist
+    minute: "10"
+    user: "root"
+    job: "CRON_REGEN=1 /etc/dnscrypt-proxy/regen_blacklist.sh && systemctl restart dnscrypt-proxy"
+    cron_file: ansible_dnscrypt-regen_blacklist
 
 - name: install resolvconf.conf
   copy:
