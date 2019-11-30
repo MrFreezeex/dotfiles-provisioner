@@ -83,6 +83,11 @@
   become: yes
   become_user: "{{ user.name }}"
 
+- name: install pop icon theme
+  aur:
+    name: pop-icon-theme-git
+    use: pikaur
+
 - name: create dunst conf directory
   file:
     path: ~/.config/dunst
