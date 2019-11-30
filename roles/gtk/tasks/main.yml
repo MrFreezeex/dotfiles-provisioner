@@ -10,7 +10,7 @@
 
 - name: install paper icon theme
   aur:
-    name: paper-icon-theme-git
+    name: paper-icon-theme
     use: pikaur
 
 - name: install pop sound theme
