@@ -8,6 +8,21 @@
       - gtk3
       - gtk-engine-murrine
 
+- name: install pop icon theme
+  aur:
+    name: pop-icon-theme-git
+    use: pikaur
+
+- name: install dmz white cursor
+  aur:
+    name: xcursor-dmz
+    use: pikaur
+
+- name: install adapta theme
+  aur:
+    name: adapta-gtk-theme
+    use: pikaur
+
 - name: install gtk2 conf
   copy:
     src: gtkrc-2.0
