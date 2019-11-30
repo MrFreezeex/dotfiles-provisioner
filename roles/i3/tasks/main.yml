@@ -109,3 +109,16 @@
   with_items:
     - notify-volume
     - notify-light
+    - notify-low-battery
+
+- name: install cronie
+  pacman:
+    name: cronie
+
+- name: install cron notify-low-battery
+  cron:
+    name: notify_low_battery
+    minute: "*/5"
+    user: "root"
+    job: "/usr/local/bin/notify-low-battery"
+    cron_file: ansible_notify-low-battery

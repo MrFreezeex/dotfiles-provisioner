@@ -8,9 +8,14 @@
       - gtk3
       - gtk-engine-murrine
 
-- name: install pop icon theme
+- name: install paper icon theme
   aur:
-    name: pop-icon-theme-git
+    name: paper-icon-theme-git
+    use: pikaur
+
+- name: install pop sound theme
+  aur:
+    name: pop-sound-theme-bin
     use: pikaur
 
 - name: install dmz white cursor

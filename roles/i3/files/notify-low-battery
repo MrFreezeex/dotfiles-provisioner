@@ -1,0 +1,23 @@
+#!/bin/sh
+
+export DISPLAY=:0
+msgId="3429742"
+BATTERY=/sys/class/power_supply/BAT0
+
+if [ `cat "$BATTERY/status"` = "Charging" ]; then
+	exit 0
+fi
+
+CAPACITY=`cat "$BATTERY/capacity"`
+icon="battery-low"
+
+if [ "$CAPACITY" -gt 20 ]; then
+	exit 0
+fi
+
+if [ "$CAPACITY" -le 10 ]; then
+	icon="battery-empty"
+fi
+
+dunstify -a "Battery" -u low -i "$icon" -r "$msgId" "${CAPACITY}%"
+canberra-gtk-play -i battery-low -d "lowBattery"

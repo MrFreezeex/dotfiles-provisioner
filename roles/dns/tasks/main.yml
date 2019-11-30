@@ -43,7 +43,7 @@
 - name: install cron regen blacklist
   cron:
     name: dnscrypt_regen_blacklist
-    minute: "10"
+    minute: "*/10"
     user: "root"
     job: "CRON_REGEN=1 /etc/dnscrypt-proxy/regen_blacklist.sh && systemctl restart dnscrypt-proxy"
     cron_file: ansible_dnscrypt-regen_blacklist
