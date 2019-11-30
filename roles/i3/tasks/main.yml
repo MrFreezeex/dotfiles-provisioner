@@ -97,6 +97,10 @@
   become: yes
   become_user: "{{ user.name }}"
 
+- name: install alsa-utils
+  pacman:
+    name: alsa-utils
+
 - name: install notify script
   copy:
     src: "{{item}}"
