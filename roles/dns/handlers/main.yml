@@ -1,5 +1,11 @@
 ---
 
+- name: service cronie
+  service:
+    name: cronie.service
+    state: started
+    enabled: yes
+
 - name: service dnscrypt-proxy
   service:
     name: dnscrypt-proxy.service

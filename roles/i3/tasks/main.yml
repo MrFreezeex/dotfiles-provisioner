@@ -114,6 +114,7 @@
 - name: install cronie
   pacman:
     name: cronie
+  notify: service cronie
 
 - name: install cron notify-low-battery
   cron:
