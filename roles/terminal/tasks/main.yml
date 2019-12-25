@@ -1,10 +1,5 @@
 ---
 
-- name: install zplugin
-  aur:
-    name: zsh-zplugin-git
-    use: pikaur
-
 - name: install urxvt truecolor
   aur:
     name: rxvt-unicode-truecolor
@@ -14,12 +9,56 @@
   copy:
     src: "{{ item }}"
     dest: "~/.{{ item }}"
-  with_items:
+  loop:
     - zshrc
     - zprofile
     - aliases
   become: yes
   become_user: "{{ user.name }}"
+
+- name: create plugin-managers dir
+  file:
+    path: /usr/share/zsh/plugin-managers
+    state: directory
+
+- name: install zplugin
+  git:
+    dest: /usr/share/zsh/plugin-managers/zplugin
+    repo: https://github.com/zdharma/zplugin.git
+  register: zplugin_install
+
+- name: install cronie
+  pacman:
+    name: cronie
+
+- name: install zplugin update script
+  copy:
+    src: "{{ item }}"
+    dest: "/usr/share/zsh/plugin-managers/{{ item }}"
+    mode: "755"
+  loop:
+    - zplugin_update.sh
+    - zplugin_update-plugin.sh
+
+- name: update zplugin
+  shell: /usr/share/plugin-managers/zplugin_update.sh
+  when: zplugin_install.changed
+
+- name: install zplugin update cron
+  cron:
+    name: zplugin_update
+    minute: "*/30"
+    user: "root"
+    job: "/usr/share/zsh/plugin-managers/zplugin_update.sh"
+    cron_file: ansible_zplugin-update
+
+- name: install zplugin plugin update cron
+  cron:
+    name: zplugin_plugin_update
+    minute: "*/30"
+    user: "{{ user.name }}"
+    job: "/usr/share/zsh/plugin-managers/zplugin_update-plugin.sh"
+    cron_file: ansible_zplugin-update_plugin
 
 - name: install Xresources
   copy:
