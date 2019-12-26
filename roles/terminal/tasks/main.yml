@@ -41,7 +41,7 @@
     - zplugin_update-plugin.sh
 
 - name: update zplugin
-  shell: /usr/share/plugin-managers/zplugin_update.sh
+  shell: /usr/share/zsh/plugin-managers/zplugin_update.sh
   when: zplugin_install.changed
 
 - name: install zplugin update cron
