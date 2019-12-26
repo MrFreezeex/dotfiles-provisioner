@@ -266,6 +266,17 @@ log_files_max_backups = 1
 block_ipv6 = false
 
 
+## Immediately respond to A and AAAA queries for host names without a domain name
+
+block_unqualified = true
+
+
+## Immediately respond to queries for local zones instead of leaking them to
+## upstream resolvers (always causing errors or timeouts).
+
+block_undelegated = true
+
+
 ## TTL for synthetic responses sent when a request has been blocked (due to
 ## IPv6 or blacklists).
 
