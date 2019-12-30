@@ -38,8 +38,8 @@
 
 ! Cursor
 
-Xcursor.theme:			    DMZ-White
-Xcursor.size:                       42
+Xcursor.theme:                      DMZ-White
+Xcursor.size:                       20
 
 ! Font
 
@@ -53,8 +53,8 @@ Xcursor.size:                       42
 
 ! URxvt
 
-URxvt*termName: rxvt-unicode-256color
-URxvt.font: xft:DejaVuSansMono Nerd Font:pixelsize=20
+URxvt*termName:                   rxvt-unicode-256color
+URxvt.font:                       xft:DejaVuSansMono Nerd Font:pixelsize=20
 URxvt.depth:                      32
 URxvt.background:                 [80]base000
 URxvt*scrollBar:                  false
@@ -90,7 +90,7 @@ XTerm*cursorColor:                  base005
 ! XTerm*font:                       -*-dina-medium-r-*-*-16-*-*-*-*-*-*-*
 
 ! XTerm*font:                         terminus-10
-XTerm.termName: 	            xterm-256color
+XTerm.termName:                     xterm-256color
 XTerm*dynamicColors:                true
 XTerm*utf8:                         2
 XTerm*eightBitInput:                true
