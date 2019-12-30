@@ -15,7 +15,7 @@
 
 - name: install pop sound theme
   aur:
-    name: pop-sound-theme-bin
+    name: yaru-sound-theme
     use: pikaur
 
 - name: install dmz white cursor
