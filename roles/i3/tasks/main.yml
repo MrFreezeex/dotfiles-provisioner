@@ -1,5 +1,12 @@
 ---
 
+- name: install Xresources
+  copy:
+    src: Xresources
+    dest: ~/.Xresources
+
+  become: yes
+  become_user: "{{ user.name }}"
 - name: install better i3 lock
   aur:
     name: i3lock-color

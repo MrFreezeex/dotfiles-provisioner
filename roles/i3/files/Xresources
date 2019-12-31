@@ -1,0 +1,70 @@
+#define base000 #1c1c22
+#define base001 #7e6565
+#define base002 #85aab6
+#define base003 #90a996
+#define base004 #3e646f
+#define base005 #817f98
+#define base006 #9aa7c0
+#define base007 #d9d6ca
+#define base008 #59596c
+#define base009 #807171
+#define base010 #3e646f
+#define base011 #568bbf
+#define base012 #5c828d
+#define base013 #9b98b7
+#define base014 #b2b7c0
+#define base015 #E8E8E8
+
+*background: base000
+*foreground: base007
+*cursorColor: base007
+
+*color0:    base000
+*color1:    base001
+*color2:    base002
+*color3:    base003
+*color4:    base004
+*color5:    base005
+*color6:    base006
+*color7:    base007
+*color8:    base008
+*color9:    base009
+*color10:   base010
+*color11:   base011
+*color12:   base012
+*color13:   base013
+*color14:   base014
+*color15:   base015
+
+! Cursor
+
+Xcursor.theme:  DMZ-White
+Xcursor.size:   30
+
+! Font
+
+Xft.dpi:        96
+Xft.antialias:  true
+Xft.hinting:    true
+Xft.rgba:       rgb
+Xft.autohint:   false
+Xft.hintstyle:  hintslight
+Xft.lcdfilter:  lcddefault
+
+! rofi
+
+rofi.color-enabled: true
+rofi.color-window:  #1c1c22, #3e646f, #3e646f
+rofi.color-normal:  #1c1c22, #d9d6ca, #85aab6, #d9d6ca, #78824B
+rofi.color-active:  #1c1c22, #d9d6ca, #85aab6, #d9d6ca, #78824B
+rofi.color-urgent:  #1c1c22, #d9d6ca, #85aab6, #d9d6ca, #78824B
+
+rofi.separator-style:   solid
+rofi.sidebar-mode:      false
+rofi.lines:             5
+rofi.font:              Source Code Pro Semibold 10.5
+rofi.bw:                1
+rofi.columns:           2
+rofi.padding:           5
+rofi.fixed-num-lines:   true
+rofi.hide-scrollbar:    true
