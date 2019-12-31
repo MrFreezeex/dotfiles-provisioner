@@ -19,6 +19,7 @@
     - zshrc
     - zprofile
     - aliases
+    - p10k.zsh
   become: yes
   become_user: "{{ user.name }}"
 
