@@ -18,12 +18,6 @@
     dest: /usr/local/bin/lock
     mode: 0555
 
-- name: install lock-suspend script
-  copy:
-    src: lock-suspend
-    dest: /usr/local/bin/lock-suspend
-    mode: 0555
-
 - name: install suspend service
   copy:
     src: suspend.service

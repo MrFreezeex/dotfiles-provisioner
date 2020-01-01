@@ -1,3 +1,5 @@
 #!/bin/sh
 
-i3lock --blur=8px "$@"
+notify-send DUNST_COMMAND_PAUSE
+i3lock --blur=8px -n "$@"
+notify-send DUNST_COMMAND_RESUME

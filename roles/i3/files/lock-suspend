@@ -1,5 +1,0 @@
-#!/bin/sh
-
-notify-send DUNST_COMMAND_PAUSE
-lock -n
-notify-send DUNST_COMMAND_RESUME
