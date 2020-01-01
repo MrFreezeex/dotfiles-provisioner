@@ -9,3 +9,5 @@ It's adapted to my current laptop which is a Dell XPS 7590 with a GPU.
 
 * secureboot scripts
 * tweak terminal colors
+* clipboard manager
+* add autorandr
