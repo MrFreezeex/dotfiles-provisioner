@@ -4,4 +4,4 @@ msgId="6543431"
 level=`printf "%.0f\n" \`light\``
 
 dunstify -a "Light" -u low -i display-brightness-symbolic.symbolic -r "$msgId" \
-	"${level}%" 
+    "${level}%" 

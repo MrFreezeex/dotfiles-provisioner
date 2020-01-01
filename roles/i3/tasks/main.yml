@@ -126,7 +126,7 @@
 - name: install cron notify-low-battery
   cron:
     name: notify_low_battery
-    minute: "*/5"
-    user: "root"
-    job: "/usr/local/bin/notify-low-battery"
+    minute: "*/2"
+    user: "{{ user.name }}"
+    job: "XAUTHORITY=/home/{{ user.name }}/.Xauthority XDG_RUNTIME_DIR=/run/user/1000  DISPLAY=:0 DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/`id -u`/bus /usr/local/bin/notify-low-battery"
     cron_file: ansible_notify-low-battery
