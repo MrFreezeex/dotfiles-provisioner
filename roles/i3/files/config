@@ -191,14 +191,10 @@ mode "resize" {
 }
 
 # Autostart applications
-exec --no-startup-id nitrogen --restore; sleep 1; compton -b
+exec --no-startup-id nitrogen --restore; sleep 1; picom -b
 exec --no-startup-id nm-applet
-# exec --no-startup-id xfce4-power-manager
-exec --no-startup-id pamac-tray
-exec --no-startup-id clipit
-exec_always --no-startup-id ff-theme-util
-exec_always --no-startup-id fix_xcursor
-exec_always --no-startup-id /$HOME/.config/polybar/reload.sh
+exec --no-startup-id $HOME/.config/i3/xautolock.sh &
+exec_always --no-startup-id $HOME/.config/polybar/reload.sh
 
 # Theme colors
 client.focused #d9d6ca #1c1c22 #d9d6ca #5c828d #5c828d

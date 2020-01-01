@@ -5,3 +5,12 @@
     name: cronie.service
     state: started
     enabled: yes
+
+- name: service dunst
+  service:
+    name: dunst.service
+    scope: user
+    state: restarted
+    enabled: yes
+  become: yes
+  become_user: "{{ user.name }}"

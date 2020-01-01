@@ -4,9 +4,9 @@
   copy:
     src: Xresources
     dest: ~/.Xresources
-
   become: yes
   become_user: "{{ user.name }}"
+
 - name: install better i3 lock
   aur:
     name: i3lock-color
@@ -28,6 +28,18 @@
   service:
     name: "suspend@{{ user.name }}.service"
     enabled: yes
+
+- name: install xautolock
+  pacman:
+    name: xautolock
+
+- name: install xautolock script
+  copy:
+    src: xautolock.sh
+    dest: ~/.config/i3/xautolock.sh
+    mode: "755"
+  become: yes
+  become_user: "{{ user.name }}"
 
 - name: install dependencies
   pacman:
@@ -90,6 +102,7 @@
     state: directory
   become: yes
   become_user: "{{ user.name }}"
+  notify: service dunst
 
 - name: copy dunstrc
   copy:
@@ -97,6 +110,7 @@
     dest: ~/.config/dunst/dunstrc
   become: yes
   become_user: "{{ user.name }}"
+  notify: service dunst
 
 - name: install alsa-utils
   pacman:

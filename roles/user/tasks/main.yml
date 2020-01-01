@@ -1,7 +1,7 @@
 ---
 
 - name: add the user
-  user: 
+  user:
     name: "{{ user.name }}"
     password: "{{ password }}"
     comment: "{{ user.comment }}"
