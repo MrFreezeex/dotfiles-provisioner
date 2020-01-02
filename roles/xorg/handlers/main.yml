@@ -1,0 +1,7 @@
+---
+
+- name: service autorandr
+  service:
+    name: autorandr.service
+    state: restarted
+    enabled: yes

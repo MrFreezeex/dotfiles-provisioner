@@ -8,3 +8,27 @@
   copy:
     src: 00-keyboard.conf
     dest: /etc/X11/xorg.conf.d/00-keyboard.conf
+
+- name: install autorandr
+  pacman:
+    name: autorandr
+  notify: service autorandr
+
+- name: create autorandr conf directory
+  file:
+    path: ~/.config/autorandr
+    mode: "755"
+    state: directory
+  become: yes
+  become_user: "{{ user.name }}"
+
+- name: create default symlink
+  file:
+    src: ~/.config/autorandr/default
+    dest: horizontal
+    state: link
+    force: yes
+    follow: no
+  become: yes
+  become_user: "{{ user.name }}"
+  notify: service autorandr
