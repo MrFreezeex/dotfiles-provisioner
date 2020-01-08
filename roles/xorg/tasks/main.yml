@@ -24,8 +24,8 @@
 
 - name: create default symlink
   file:
-    src: ~/.config/autorandr/default
-    dest: horizontal
+    path: ~/.config/autorandr/default
+    src: horizontal
     state: link
     force: yes
     follow: no
