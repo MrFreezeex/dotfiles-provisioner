@@ -1,0 +1,55 @@
+---
+
+- name: install required packages
+  pacman:
+    name:
+      - efibootmgr
+      - sbsigntools
+      - openssl
+      - efi-updatevar
+
+- name: create secureboot directory
+  file:
+    path: "{{ sb_folder }}"
+    state: directory
+    owner: root
+    mode: "700"
+
+- name: create GUID
+  shell: uuidgen --random > GUID.txt
+  args:
+    chdir: "{{ sb_folder }}"
+    creates: GUID.txt
+
+- include: pk.yml
+- include: kek.yml
+- include: db.yml
+- include: enroll.yml
+  when: pk.changed or kek.changed or db.changed
+
+- name: copy kernel-sign script
+  template:
+    src: kernel-sign
+    dest: /sbin/kernel-sign
+    mode: "755"
+
+- name: copy update-efi-boot script
+  update-efi-boot:
+    src: update-efi-boot
+    dest: /sbin/update-efi-boot
+    mode: "755"
+
+- name: copy pacman hook
+  template:
+    src: 99-secureboot.hook
+    dest: /etc/pacman.d/hooks/99-secureboot.hook
+
+- name: initially sign the kernel
+  shell: /sbin/kernel-sign
+  args:
+    creates: /boot/EFI/Linux/linux.efi
+  register: linux-signed
+
+- name: add to efi boot entry
+  shell: /sbin/update-efi-boot
+  when: linux-signed.changed

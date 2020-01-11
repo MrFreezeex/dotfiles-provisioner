@@ -1,0 +1,15 @@
+---
+
+- name: enroll rm_PK.auth
+  shell: efi-updatevar -f noPK.auth PK
+  args:
+    chdir: "{{ sb_folder }}"
+
+- name: enroll keys
+  shell: "efi-updatevar -e -f {{ item }}.auth {{ item }}"
+  args:
+    chdir: "{{ sb_folder }}"
+  loop:
+    - KEK
+    - db
+    - PK

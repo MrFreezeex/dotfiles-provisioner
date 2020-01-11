@@ -1,0 +1,32 @@
+---
+
+- name: create PK.crt
+  shell: openssl req -newkey rsa:4096 -nodes -keyout PK.key -new -x509 -sha256 -days 36500 -subj "/CN=my Platform Key/" -out PK.crt
+  args:
+    chdir: "{{ sb_folder }}"
+    creates: PK.crt
+
+- name: create PK.cer
+  shell: openssl x509 -outform DER -in PK.crt -out PK.cer
+  args:
+    chdir: "{{ sb_folder }}"
+    creates: PK.cer
+
+- name: create PK.esl
+  shell: cert-to-efi-sig-list -g "$(< GUID.txt)" PK.crt PK.esl
+  args:
+    chdir: "{{ sb_folder }}"
+    creates: PK.esl
+
+- name: create PK.auth
+  shell: sign-efi-sig-list -g "$(< GUID.txt)" -k PK.key -c PK.crt PK PK.esl PK.auth
+  args:
+    chdir: "{{ sb_folder }}"
+    creates: PK.auth
+  register: pk
+
+- name: sign empty file rm_PK.auth
+  shell: sign-efi-sig-list -g "$(< GUID.txt)" -c PK.crt -k PK.key PK /dev/null rm_PK.auth
+  args:
+    chdir: "{{ sb_folder }}"
+    creates: rm_PK.auth

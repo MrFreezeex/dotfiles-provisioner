@@ -1,0 +1,26 @@
+---
+
+- name: create KEK.crt
+  shell: openssl req -newkey rsa:4096 -nodes -keyout KEK.key -new -x509 -sha256 -days 36500 -subj "/CN=my Key Exchange Key/" -out KEK.crt
+  args:
+    chdir: "{{ sb_folder }}"
+    creates: KEK.crt
+
+- name: create KEK.cer
+  shell: openssl x509 -outform DER -in KEK.crt -out KEK.cer
+  args:
+    chdir: "{{ sb_folder }}"
+    creates: KEK.cer
+
+- name: create KEK.esl
+  shell: cert-to-efi-sig-list -g "$(< GUID.txt)" KEK.crt KEK.esl
+  args:
+    chdir: "{{ sb_folder }}"
+    creates: KEK.esl
+
+- name: create KEK.auth
+  shell: sign-efi-sig-list -g "$(< GUID.txt)" -k PK.key -c PK.crt KEK KEK.esl KEK.auth
+  args:
+    chdir: "{{ sb_folder }}"
+    creates: KEK.auth
+  register: kek

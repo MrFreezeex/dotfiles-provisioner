@@ -1,0 +1,26 @@
+---
+
+- name: create db.crt
+  shell: openssl req -newkey rsa:4096 -nodes -keyout db.key -new -x509 -sha256 -days 36500 -subj "/CN=my Signature Database key/" -out db.crt
+  args:
+    chdir: "{{ sb_folder }}"
+    creates: db.crt
+
+- name: create db.cer
+  shell: openssl x509 -outform DER -in db.crt -out db.cer
+  args:
+    chdir: "{{ sb_folder }}"
+    creates: db.cer
+
+- name: create db.esl
+  shell: cert-to-efi-sig-list -g "$(< GUID.txt)" db.crt db.esl
+  args:
+    chdir: "{{ sb_folder }}"
+    creates: db.esl
+
+- name: create db.auth
+  shell: sign-efi-sig-list -g "$(< GUID.txt)" -k KEK.key -c KEK.crt db db.esl db.auth
+  args:
+    chdir: "{{ sb_folder }}"
+    creates: db.auth
+  register: db
