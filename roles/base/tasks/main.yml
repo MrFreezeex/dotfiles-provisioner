@@ -82,3 +82,9 @@
   user:
     name: aur_builder
     state: absent
+
+- name: enable timesync
+  service:
+    name: systemd-timesyncd.service
+    state: started
+    enabled: yes
