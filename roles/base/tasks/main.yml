@@ -118,3 +118,8 @@
     dest: ~/.ssh/config.d/cri
   become: yes
   become_user: "{{ user.name }}"
+
+- name: install pam environment file
+  copy:
+    src: pam_environment
+    dest: ~/.pam_environment
