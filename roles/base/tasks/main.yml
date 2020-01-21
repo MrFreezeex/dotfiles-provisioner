@@ -88,3 +88,33 @@
     name: systemd-timesyncd.service
     state: started
     enabled: yes
+
+- name: add ssh config
+  copy:
+    src: ssh-config
+    dest: ~/.ssh/config
+  become: yes
+  become_user: "{{ user.name }}"
+
+- name: add ssh config.d
+  file:
+    path: ~/.ssh/config.d
+    mode: "750"
+    state: directory
+  become: yes
+  become_user: "{{ user.name }}"
+
+- name: copy acu ssh config
+  copy:
+    src: acu-ssh-config
+    dest: ~/.ssh/config.d/acu
+    mode: "440"
+  become: yes
+  become_user: "{{ user.name }}"
+
+- name: copy cri ssh config
+  copy:
+    src: cri-ssh-config
+    dest: ~/.ssh/config.d/cri
+  become: yes
+  become_user: "{{ user.name }}"
