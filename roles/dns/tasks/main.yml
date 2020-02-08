@@ -16,6 +16,7 @@
   loop:
     - dnscrypt-proxy.toml
     - forwarding-rules.txt
+    - whitelist.txt
   notify: service dnscrypt-proxy
 
 - name: clone dnscryt repo
