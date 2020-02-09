@@ -123,3 +123,9 @@
   copy:
     src: pam_environment
     dest: ~/.pam_environment
+
+- name: install conncheck
+  copy:
+    src: conncheck
+    dest: /usr/local/bin/conncheck
+    mode: "755"

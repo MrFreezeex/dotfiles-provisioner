@@ -2,4 +2,6 @@
 # ~/.zprofile
 #
 
+export VAULT_ADDR=https://vault.cri.epita.fr:443
+
 [[ -f ~/.zshrc ]] && . ~/.zshrc

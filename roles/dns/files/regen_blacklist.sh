@@ -1,5 +1,9 @@
 #!/bin/sh
 
+if ! conncheck; then
+    exit 1
+fi
+
 BLACKLIST_FILE=/etc/dnscrypt-proxy/blacklist.txt
 BLACKLIST_SCRIPTS=/etc/dnscrypt-proxy/repository/utils/generate-domains-blacklists/
 

@@ -1,5 +1,6 @@
 
 export ZSH=/usr/share/zsh
+export EDITOR=vim
 
 source "$ZSH/plugin-managers/zplugin/zplugin.zsh"
 autoload -Uz _zplugin
@@ -20,8 +21,8 @@ bindkey \^U backward-kill-line
 source ~/.aliases
 
 export HISTFILE=~/.zsh_history
-export HISTSIZE=500
-export SAVEHIST=5000
+export HISTSIZE=50000
+export SAVEHIST=50000
 
 zplugin ice wait lucid atload"_zsh_autosuggest_start"
 zplugin light zsh-users/zsh-autosuggestions

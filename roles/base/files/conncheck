@@ -1,0 +1,17 @@
+#!/bin/sh
+
+if ! ping -c 1 9.9.9.9 >/dev/null; then
+    echo "Network connectivity issues detected!"
+    exit 1
+fi
+
+if ! systemctl is-active --quiet dnscrypt-proxy.service; then
+    echo "dnscrypt if not active!"
+    exit 1
+fi
+
+if ! nslookup mrfreezeex.fr >/dev/null; then
+    echo "DNS issues detected!"
+    exit 1
+fi
+
